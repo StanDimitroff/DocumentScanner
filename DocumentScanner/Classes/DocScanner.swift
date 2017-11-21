@@ -75,7 +75,7 @@ public final class DocScanner: NSObject {
             guard let `self` = self else { return }
 
             let croppedImage =  image.cropImage(toRect:  self.lastFrame)
-            //self.scannerView?.imageView.image = croppedImage
+            self.scannerView?.imageView.image = croppedImage
 
             //self.scannerView?.imageView.isHidden = false
         }
