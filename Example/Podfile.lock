@@ -1,0 +1,22 @@
+PODS:
+  - DocumentScanner (0.1.0)
+  - Nimble (7.0.2)
+  - Quick (1.2.0)
+
+DEPENDENCIES:
+  - DocumentScanner (from `../`)
+  - Nimble (~> 7.0.2)
+  - Quick (~> 1.2.0)
+
+EXTERNAL SOURCES:
+  DocumentScanner:
+    :path: ../
+
+SPEC CHECKSUMS:
+  DocumentScanner: e852561c0ca194766eb15ee128347b79740654f1
+  Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+
+PODFILE CHECKSUM: d322804764899df2e0c33cc6e904fe0c985bba2b
+
+COCOAPODS: 1.3.1
