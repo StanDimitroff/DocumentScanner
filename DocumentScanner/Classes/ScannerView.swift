@@ -5,19 +5,26 @@
 //  Created by Stanislav Dimitrov on 20.11.17.
 //
 
-import Foundation
+import UIKit
 
-public class ScannerView: UIView {
+final class ScannerView: UIView {
 
     @IBOutlet var cameraView: UIView!
     @IBOutlet var trackView: UIView!
-    @IBOutlet weak var imageView: UIImageView!
     
     var onImageCapture: (() -> Void)?
 
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
+    }
+
+    public convenience init() {
+        self.init(frame: CGRect.zero)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func setup() {

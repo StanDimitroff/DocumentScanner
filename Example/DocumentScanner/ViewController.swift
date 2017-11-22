@@ -11,14 +11,12 @@ import DocumentScanner
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var scannerView: ScannerView!
-
     let scanner = DocScanner()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        scanner.scannerView = scannerView
+        scanner.presenter = self
         scanner.startSession()
     }
 }

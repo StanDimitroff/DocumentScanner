@@ -7,16 +7,50 @@
 
 import UIKit
 
-class PreviewView: UIView {
+final class PreviewView: UIView {
 
-    var imageView = UIImageView()
-
-    init() {
-        super.init(frame: CGRect.zero)
-        addSubview(imageView)
+    @IBOutlet weak var imageView: UIImageView!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
     }
+
+    public convenience init() {
+        self.init(frame: CGRect.zero)
+    }
+
+    func setup() {
+        let podBundle = Bundle(for: self.classForCoder)
+
+        if let bundleURL = podBundle.url(forResource: "DocumentScanner", withExtension: "bundle") {
+            if let bundle = Bundle.init(url: bundleURL) {
+
+                let nib  = UINib(nibName: "PreviewView", bundle: bundle)
+                let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
+
+                view.frame = bounds
+
+                addSubview(view)
+            } else {
+                assertionFailure("Could not load the bundle")
+            }
+        } else {
+            assertionFailure("Could not create a path to the bundle")
+        }
+    }
+
+    @IBAction func save(_ sender: UIBarButtonItem) {
+
+    }
+
+    @IBAction func retake(_ sender: UIBarButtonItem) {
+        
+    }
+
 }

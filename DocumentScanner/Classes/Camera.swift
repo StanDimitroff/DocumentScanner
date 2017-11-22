@@ -80,7 +80,6 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 }
 
-
 // MARK: - AVCapturePhotoCaptureDelegate
 extension Camera: AVCapturePhotoCaptureDelegate {
     public func photoOutput(

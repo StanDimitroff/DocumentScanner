@@ -5,40 +5,41 @@
 //  Created by Stanislav Dimitrov on 20.11.17.
 //
 
-import Foundation
+import UIKit
 import AVFoundation
 
 public final class DocScanner: NSObject {
+
+    public var presenter: UIViewController!
 
     private var camera: Camera
     private let rectDetector = RectangleDetector()
 
     private lazy var cameraLayer: AVCaptureVideoPreviewLayer = {
         let layer = AVCaptureVideoPreviewLayer(session: camera.captureSession)
-        layer.frame = scannerView?.bounds ?? .zero
+        layer.frame = presenter.view.bounds
         layer.videoGravity = .resizeAspectFill
         
         return layer
     }()
 
-    public var scannerView: ScannerView? {
-        didSet {
-            scannerView?.cameraView.layer.addSublayer(cameraLayer)
-        }
-    }
+    private var scannerView: ScannerView!
 
     public var onImageExport: ((UIImage) -> Void)?
 
     var lastFrame = CGRect.zero
 
     public override init() {
-        let camera = Camera(rectDetector)
-        self.camera = camera
+        camera = Camera(rectDetector)
 
         super.init()
     }
 
     public func startSession() {
+        scannerView = ScannerView(frame: presenter.view.frame)
+        scannerView.cameraView.layer.addSublayer(cameraLayer)
+        presenter.view.addSubview(scannerView)
+        
         camera.startSession()
 
         observeDetectorOutput()
@@ -52,19 +53,19 @@ public final class DocScanner: NSObject {
             guard let `self` = self else { return }
 
             if newFrame == .zero {
-                self.scannerView?.trackView.frame = newFrame
+                self.scannerView.trackView.frame = newFrame
                 return
             }
 
             // calculate view rect
             let convertedRect = self.cameraLayer.layerRectConverted(fromMetadataOutputRect: newFrame)
             self.scannerView?.trackView.frame = convertedRect
-            self.lastFrame = convertedRect
+            self.lastFrame = newFrame
         }
     }
 
     private func observePhotoOutput() {
-        scannerView?.onImageCapture = { [weak self] in
+        scannerView.onImageCapture = { [weak self] in
             guard let `self` = self else { return }
             self.camera.capturePhoto()
         }
@@ -75,9 +76,16 @@ public final class DocScanner: NSObject {
             guard let `self` = self else { return }
 
             let croppedImage =  image.cropImage(toRect:  self.lastFrame)
-            self.scannerView?.imageView.image = croppedImage
 
-            //self.scannerView?.imageView.isHidden = false
+            let previewView = PreviewView(frame: self.presenter.view.frame)
+            previewView.imageView.image = croppedImage
+
+            self.scannerView.removeFromSuperview()
+            self.presenter.view.addSubview(previewView)
+
+            //self.scannerView?.imageView.image = croppedImage
+
+           // self.scannerView?.imageView.isHidden = false
         }
     }
 }
