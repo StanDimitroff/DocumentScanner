@@ -18,7 +18,7 @@ final class RectangleDetector {
         let request = VNDetectRectanglesRequest(completionHandler: handleVisionRequestUpdate)
         request.minimumConfidence = 0.7
         request.minimumSize = 0.5
-        //request.quadratureTolerance = 10
+        request.quadratureTolerance = 45
 
         // perform the request
         do {

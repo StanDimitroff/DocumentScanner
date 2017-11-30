@@ -16,7 +16,21 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ld3-u1-sYU">
+                                <rect key="frame" x="165.5" y="315.5" width="44" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Scan"/>
+                                <connections>
+                                    <action selector="scanDocument:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="AFG-2x-tyt"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ld3-u1-sYU" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="7M5-KT-IR3"/>
+                            <constraint firstItem="Ld3-u1-sYU" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="pTR-ME-2TS"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="3wo-sx-S5d"/>
                     </view>
                 </viewController>

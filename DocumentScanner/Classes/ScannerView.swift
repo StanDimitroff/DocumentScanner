@@ -13,13 +13,14 @@ final class ScannerView: UIView {
     @IBOutlet var trackView: UIView!
     
     var onImageCapture: (() -> Void)?
+    var onDismiss: (() -> Void)?
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
 
-    public convenience init() {
+    convenience init() {
         self.init(frame: CGRect.zero)
     }
 
@@ -27,7 +28,7 @@ final class ScannerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setup() {
+    private func setup() {
         let podBundle = Bundle(for: self.classForCoder)
 
         if let bundleURL = podBundle.url(forResource: "DocumentScanner", withExtension: "bundle") {
@@ -52,5 +53,10 @@ final class ScannerView: UIView {
 
     @IBAction func captureImage(_ sender: UIButton) {
         onImageCapture?()
+    }
+
+    @IBAction func dismiss(_ sender: UIButton) {
+        onDismiss?()
+        self.removeFromSuperview()
     }
 }

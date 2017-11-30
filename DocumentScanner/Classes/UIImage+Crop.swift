@@ -6,24 +6,24 @@
 //
 
 import UIKit
+import AVFoundation
 
 extension UIImage {
 
-    func cropImage(toRect rect: CGRect) -> UIImage? {
-        //UIGraphicsBeginImageContextWithOptions(self.size, false, UIScreen.main.scale)
-        let transform = CGAffineTransform(scaleX: self.scale, y: self.scale)
-        //let rect = CGRect(x: x, y: y, width: width, height: height)
-        let transformedCropRect = rect.applying(transform)
-        let cgImage: CGImage! = self.cgImage
-        let croppedCGImage: CGImage! = cgImage.cropping(to: transformedCropRect)
-        //let imageRef = CGImageCreateWithImageInRect(self.cgImage!, transformedCropRect)!
-       // let croppedImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
+    func crop(toPreviewLayer layer: AVCaptureVideoPreviewLayer, withRect rect: CGRect) -> UIImage {
+        let outputRect = layer.metadataOutputRectConverted(fromLayerRect: rect)
+        var cgImage = self.cgImage!
+        let width = CGFloat(cgImage.width)
+        let height = CGFloat(cgImage.height)
+        let cropRect = CGRect(
+            x: outputRect.origin.x * width,
+            y: outputRect.origin.y * height,
+            width: outputRect.size.width * width,
+            height: outputRect.size.height * height)
 
-        //return croppedImage
+        cgImage = cgImage.cropping(to: cropRect)!
+        let croppedUIImage = UIImage(cgImage: cgImage, scale: self.scale, orientation: self.imageOrientation)
 
-//        let cgImage: CGImage! = self.cgImage
-        //let croppedCGImage: CGImage! = cgImage.cropping(to: rect)
-
-        return UIImage(cgImage: croppedCGImage, scale: self.scale, orientation: self.imageOrientation)
+        return croppedUIImage
     }
 }

@@ -24,6 +24,27 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
+                <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a65-hC-UtZ">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmY-aH-4QR">
+                            <rect key="frame" x="302" y="5.5" width="53" height="33"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="dismiss:" destination="-1" eventType="touchUpInside" id="klW-pl-Rdv"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="G78-b3-24H"/>
+                        <constraint firstAttribute="trailing" secondItem="zmY-aH-4QR" secondAttribute="trailing" constant="20" id="LaP-fs-nCZ"/>
+                        <constraint firstItem="zmY-aH-4QR" firstAttribute="centerY" secondItem="a65-hC-UtZ" secondAttribute="centerY" id="WGG-Pi-M57"/>
+                    </constraints>
+                </view>
                 <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gFB-wQ-WhS">
                     <rect key="frame" x="146" y="292" width="83" height="83"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -45,8 +66,11 @@
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="88x-r2-t1E"/>
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Heg-68-inU"/>
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="OMT-e2-cfX"/>
+                <constraint firstItem="a65-hC-UtZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="U2r-Bf-mL2"/>
                 <constraint firstItem="sCV-uA-rx2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Zll-TB-lbf"/>
+                <constraint firstItem="a65-hC-UtZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rxP-qz-Vrz"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="sCV-uA-rx2" secondAttribute="bottom" constant="10" id="sE4-1Z-fA7"/>
+                <constraint firstItem="a65-hC-UtZ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="yFt-p4-Sdf"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="33.5" y="53.5"/>

@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewView" customModule="DocumentScanner">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewView" customModule="DocumentScanner_Example">
             <connections>
                 <outlet property="imageView" destination="nfW-i3-IYi" id="Rq5-aC-w2v"/>
             </connections>
@@ -19,28 +19,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lA7-NT-obG">
-                    <rect key="frame" x="0.0" y="30" width="375" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="VKR-WS-Y38"/>
-                    </constraints>
-                    <viewLayoutGuide key="safeArea" id="IXh-dI-IbO"/>
-                    <items>
-                        <barButtonItem title="Save" style="done" id="L65-tQ-GyY">
-                            <connections>
-                                <action selector="save:" destination="-1" id="A90-7d-Uxp"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem width="272" style="plain" systemItem="fixedSpace" id="34X-bl-TnR"/>
-                        <barButtonItem title="Retake" id="v1Q-kw-SJ2">
-                            <connections>
-                                <action selector="retake:" destination="-1" id="lmL-aL-zPE"/>
-                            </connections>
-                        </barButtonItem>
-                    </items>
-                </toolbar>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nfW-i3-IYi">
-                    <rect key="frame" x="0.0" y="80" width="375" height="537"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="597"/>
                 </imageView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8eU-GP-KfM">
                     <rect key="frame" x="0.0" y="617" width="375" height="50"/>
@@ -49,22 +29,23 @@
                     </constraints>
                     <items>
                         <barButtonItem width="334" style="plain" systemItem="fixedSpace" id="j6g-5k-ysF"/>
-                        <barButtonItem systemItem="trash" id="fft-pi-n7K"/>
+                        <barButtonItem systemItem="camera" id="fft-pi-n7K">
+                            <connections>
+                                <action selector="retake:" destination="-1" id="F1c-yI-TdK"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                 </toolbar>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="8eU-GP-KfM" firstAttribute="leading" secondItem="aCH-5R-gkp" secondAttribute="leading" id="2Fm-4s-I0K"/>
-                <constraint firstItem="nfW-i3-IYi" firstAttribute="top" secondItem="lA7-NT-obG" secondAttribute="bottom" id="2IQ-E7-Kae"/>
                 <constraint firstItem="nfW-i3-IYi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Bgc-GC-0To"/>
                 <constraint firstItem="8eU-GP-KfM" firstAttribute="bottom" secondItem="aCH-5R-gkp" secondAttribute="bottom" id="IIa-z9-lFi"/>
-                <constraint firstItem="lA7-NT-obG" firstAttribute="top" secondItem="aCH-5R-gkp" secondAttribute="top" constant="10" id="Qc0-e7-800"/>
                 <constraint firstItem="8eU-GP-KfM" firstAttribute="trailing" secondItem="aCH-5R-gkp" secondAttribute="trailing" id="YBK-NS-Iyw"/>
+                <constraint firstItem="nfW-i3-IYi" firstAttribute="top" secondItem="aCH-5R-gkp" secondAttribute="top" id="b8Z-ZJ-OaF"/>
                 <constraint firstItem="8eU-GP-KfM" firstAttribute="top" secondItem="nfW-i3-IYi" secondAttribute="bottom" id="crF-qn-NZT"/>
-                <constraint firstItem="lA7-NT-obG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fUB-c1-Omk"/>
                 <constraint firstAttribute="trailing" secondItem="nfW-i3-IYi" secondAttribute="trailing" id="fbs-Ag-GBQ"/>
-                <constraint firstItem="lA7-NT-obG" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="wRx-NZ-bBL"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="aCH-5R-gkp"/>
             <point key="canvasLocation" x="33.5" y="53.5"/>

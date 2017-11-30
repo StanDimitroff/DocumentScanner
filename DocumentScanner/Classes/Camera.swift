@@ -14,7 +14,9 @@ final class Camera: NSObject {
     private let capturePhotoOutput = AVCapturePhotoOutput()
 
     private(set) var scannerView: ScannerView!
-    private(set) var previewView: PreviewView!
+    //private(set) var previewView: PreviewView!
+
+    var onPhotoCapture: ((UIImage) -> Void)?
 
      lazy var captureSession: AVCaptureSession = {
         let session = AVCaptureSession()
@@ -63,6 +65,10 @@ final class Camera: NSObject {
         observeScannerViewActions()
     }
 
+    func stopSession() {
+        captureSession.stopRunning()
+    }
+
     private func configureSessiion() {
         captureSession.beginConfiguration()
 
@@ -92,22 +98,12 @@ final class Camera: NSObject {
 
             self.capturePhoto()
         }
-    }
 
-    private func photoCaptured(_ photo: UIImage) {
+        scannerView.onDismiss = { [weak self] in
+            guard let `self` = self else { return }
 
-        let frame = scannerView.trackView.frame
-
-        previewView = PreviewView(frame: scannerView.frame)
-
-        let image = photo//.resized
-
-        let img = image.cropImage(toRect: frame)
-
-        previewView.imageView.image = img
-
-
-        scannerView.addSubview(previewView)
+            self.stopSession()
+        }
     }
 
     private func capturePhoto() {
@@ -129,7 +125,7 @@ final class Camera: NSObject {
 
 // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
 extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
-    public func captureOutput(
+    func captureOutput(
         _ output: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,
         from connection: AVCaptureConnection) {
@@ -143,7 +139,7 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
 
 // MARK: - AVCapturePhotoCaptureDelegate
 extension Camera: AVCapturePhotoCaptureDelegate {
-    public func photoOutput(
+    func photoOutput(
         _ output: AVCapturePhotoOutput,
         didFinishProcessingPhoto photo: AVCapturePhoto,
         error: Error?) {
@@ -152,7 +148,7 @@ extension Camera: AVCapturePhotoCaptureDelegate {
 
         guard let image = UIImage(data: data) else { return }
 
-        photoCaptured(image)
+        onPhotoCapture?(image)
     }
 }
 
