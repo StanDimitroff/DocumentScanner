@@ -18,7 +18,7 @@ final class RectangleDetector {
         let request = VNDetectRectanglesRequest(completionHandler: handleVisionRequestUpdate)
         request.minimumConfidence = 0.7
         request.minimumSize = 0.5
-        // request.quadratureTolerance = 10
+        //request.quadratureTolerance = 10
 
         // perform the request
         do {
@@ -32,10 +32,7 @@ final class RectangleDetector {
         DispatchQueue.main.async {
             // make sure we have an actual result
             guard let newObservation = request.results?.first as? VNRectangleObservation
-                else {
-                    self.onRectDetect?(.zero)
-                    return
-            }
+                else { self.onRectDetect?(.zero); return }
 
             let transformedRect = newObservation.boundingBox
             self.onRectDetect?(transformedRect)

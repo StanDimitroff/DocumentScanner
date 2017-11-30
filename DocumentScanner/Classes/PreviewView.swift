@@ -10,7 +10,7 @@ import UIKit
 final class PreviewView: UIView {
 
     @IBOutlet weak var imageView: UIImageView!
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -50,7 +50,6 @@ final class PreviewView: UIView {
     }
 
     @IBAction func retake(_ sender: UIBarButtonItem) {
-        
+        self.removeFromSuperview()
     }
-
 }

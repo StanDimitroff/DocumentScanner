@@ -46,9 +46,8 @@ final class ScannerView: UIView {
             assertionFailure("Could not create a path to the bundle")
         }
 
-        trackView?.layer.borderColor = UIColor.red.cgColor
-        trackView?.layer.borderWidth = 4
-        trackView?.backgroundColor   = .clear
+        trackView?.layer.borderColor = UIColor.orange.cgColor
+        trackView?.layer.borderWidth = 1
     }
 
     @IBAction func captureImage(_ sender: UIButton) {
