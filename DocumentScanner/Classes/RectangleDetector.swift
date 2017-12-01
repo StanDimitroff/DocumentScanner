@@ -14,13 +14,11 @@ final class RectangleDetector {
     private let visionSequenceHandler = VNSequenceRequestHandler()
 
     func detect(on pixelBuffer: CVPixelBuffer) {
-        // create the request
         let request = VNDetectRectanglesRequest(completionHandler: handleVisionRequestUpdate)
-        request.minimumConfidence = 0.7
-        request.minimumSize = 0.5
+        request.minimumConfidence = 0.6
+        request.minimumSize = 0.3
         request.quadratureTolerance = 45
 
-        // perform the request
         do {
             try visionSequenceHandler.perform([request], on: pixelBuffer)
         } catch {

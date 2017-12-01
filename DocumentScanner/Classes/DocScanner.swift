@@ -6,23 +6,19 @@
 //
 
 import UIKit
-import AVFoundation
 
 public final class DocScanner {
 
     /// UIViewController instance where scanner will be presented
     public var presenter: UIViewController!
 
-    private var camera: Camera
-    private let rectDetector = RectangleDetector()
+    private var camera = Camera()
 
     /// Exports scanned image
     public var onImageExport: ((UIImage) -> Void)?
 
     /// Construct scanner object
-    public init() {
-        camera = Camera(rectDetector)
-    }
+    public init() { }
 
     /// Start scanning
     public func startSession() {
@@ -47,10 +43,8 @@ public final class DocScanner {
     }
 
     private func observeCameraOutput() {
-        camera.onPhotoCapture = { [weak self]
+        camera.onPhotoCapture = {
             photo in
-
-            guard let `self` = self else { return }
 
             let cropRect = self.camera.scannerView.trackView.frame
             let croppedImage = photo.crop(toPreviewLayer: self.camera.cameraLayer, withRect: cropRect)

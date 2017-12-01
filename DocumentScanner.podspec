@@ -30,11 +30,11 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'DocumentScanner/Classes/**/*'
+  s.source_files = 'DocumentScanner/Classes/**/*.swift'
 
   s.resource_bundles = {
   'DocumentScanner' => [
-      'DocumentScanner/Resources/**/*.xib'
+      'DocumentScanner/Resources/**/*'
     ]
   }
 

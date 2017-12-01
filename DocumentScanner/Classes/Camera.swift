@@ -10,15 +10,14 @@ import AVFoundation
 
 final class Camera: NSObject {
     
-    private let rectDetector: RectangleDetector
+    private let rectDetector = RectangleDetector()
     private let capturePhotoOutput = AVCapturePhotoOutput()
 
-    private(set) var scannerView: ScannerView!
-    //private(set) var previewView: PreviewView!
+    private(set) var scannerView = ScannerView()
 
     var onPhotoCapture: ((UIImage) -> Void)?
 
-     lazy var captureSession: AVCaptureSession = {
+    lazy var captureSession: AVCaptureSession = {
         let session = AVCaptureSession()
         session.sessionPreset = .photo
         guard
@@ -41,12 +40,7 @@ final class Camera: NSObject {
         return layer
     }()
 
-    init(_ rectDetector: RectangleDetector) {
-        self.rectDetector = rectDetector
-    }
-
     func prepareForSession(prepared: (AVCaptureVideoPreviewLayer, ScannerView) -> ()) {
-        scannerView = ScannerView()
         scannerView.cameraView.layer.addSublayer(cameraLayer)
 
         prepared(cameraLayer, scannerView)
@@ -54,6 +48,7 @@ final class Camera: NSObject {
 
     func startSession() {
         let videoOutput = AVCaptureVideoDataOutput()
+        videoOutput.alwaysDiscardsLateVideoFrames = true
         videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "MyQueue"))
         captureSession.addOutput(videoOutput)
 

@@ -11,7 +11,6 @@ import DocumentScanner
 
 class ViewController: UIViewController {
 
-    let scanner = DocScanner()
     var previewView: PreviewView!
 
     override func viewDidLoad() {
@@ -21,20 +20,19 @@ class ViewController: UIViewController {
     override var prefersStatusBarHidden: Bool { return true }
 
     @IBAction func scanDocument(_ sender: UIButton) {
+        let scanner = DocScanner()
         scanner.presenter = self
         scanner.startSession()
 
-        observeScannerOutput()
-    }
-
-    func observeScannerOutput() {
-        scanner.onImageExport = {
-
+        scanner.onImageExport = { [weak self]
+            
             image in
 
+            guard let `self` = self else { return }
+            
             self.previewView = PreviewView(frame: self.view.frame)
             self.previewView.imageView.image = image
-
+            
             self.view.addSubview(self.previewView)
         }
     }
