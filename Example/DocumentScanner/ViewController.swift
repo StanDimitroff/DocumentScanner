@@ -20,8 +20,7 @@ class ViewController: UIViewController {
     override var prefersStatusBarHidden: Bool { return true }
 
     @IBAction func scanDocument(_ sender: UIButton) {
-        let scanner = DocScanner()
-        scanner.presenter = self
+        let scanner = DocScanner(presenter: self)
         scanner.startSession()
 
         scanner.onImageExport = { [weak self]

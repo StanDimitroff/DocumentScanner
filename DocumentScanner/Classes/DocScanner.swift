@@ -9,16 +9,16 @@ import UIKit
 
 public final class DocScanner {
 
-    /// UIViewController instance where scanner will be presented
-    public var presenter: UIViewController!
-
+    private var presenter: UIViewController
     private var camera = Camera()
 
     /// Exports scanned image
     public var onImageExport: ((UIImage) -> Void)?
 
     /// Construct scanner object
-    public init() { }
+    public init(presenter: UIViewController) {
+        self.presenter = presenter
+    }
 
     /// Start scanning
     public func startSession() {
@@ -46,7 +46,10 @@ public final class DocScanner {
         camera.onPhotoCapture = {
             photo in
 
-            let cropRect = self.camera.scannerView.trackView.frame
+            let cropRect = self.camera.documentRect
+
+            assert(!cropRect.isEmpty, "Cannot crop image with empty region: \(cropRect)")
+
             let croppedImage = photo.crop(toPreviewLayer: self.camera.cameraLayer, withRect: cropRect)
 
             self.onImageExport?(croppedImage)

@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  DocumentScanner: 51efe10bb7051cc56aac5cd2deb35cadb032d742
+  DocumentScanner: a9d7ad55d7d5bcb0f3d0ca0a22034f99a09445ea
   Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
 

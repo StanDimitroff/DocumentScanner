@@ -10,10 +10,11 @@ import AVFoundation
 
 final class Camera: NSObject {
     
-    private let rectDetector = RectangleDetector()
+    private let rectDetector       = RectangleDetector()
     private let capturePhotoOutput = AVCapturePhotoOutput()
 
-    private(set) var scannerView = ScannerView()
+    private(set) var scannerView   = ScannerView()
+    private(set) var documentRect  = CGRect()
 
     var onPhotoCapture: ((UIImage) -> Void)?
 
@@ -82,7 +83,17 @@ final class Camera: NSObject {
 
             // calculate view rect
             let convertedRect = self.cameraLayer.layerRectConverted(fromMetadataOutputRect: newFrame)
+
+            if convertedRect.isNull ||
+               convertedRect.isEmpty ||
+               convertedRect.isInfinite {
+                self.scannerView.trackView.frame = .zero
+
+                return
+            }
+            
             self.scannerView.trackView.frame = convertedRect
+            self.documentRect = convertedRect
         }
     }
 
@@ -102,6 +113,8 @@ final class Camera: NSObject {
     }
 
     private func capturePhoto() {
+        assert(!documentRect.isEmpty, "Rect of interest could not be empty: \(documentRect)")
+
         let settings = AVCapturePhotoSettings()
         settings.flashMode = .auto
         settings.isAutoStillImageStabilizationEnabled = true
