@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CroppView" customModule="DocumentScanner" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="IGI-av-nLY" id="YYq-Cb-nWP"/>
+                <outlet property="regionView" destination="f3u-Sf-y8Q" id="vKM-nl-NFZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IGI-av-nLY">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                </imageView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6o0-xD-q4y">
+                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="COD-6l-M6S"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem title="Retake" id="tC1-07-Z7Y">
+                            <connections>
+                                <action selector="retake:" destination="-1" id="xMT-NT-gAU"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ijO-5J-gaw"/>
+                        <barButtonItem title="Keep" style="done" id="aQ1-gx-bN0">
+                            <connections>
+                                <action selector="saveImage:" destination="-1" id="19W-1h-K8G"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f3u-Sf-y8Q">
+                    <rect key="frame" x="67" y="201" width="240" height="240"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="IGI-av-nLY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BIL-rK-tNx"/>
+                <constraint firstItem="IGI-av-nLY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="bFV-1m-15h"/>
+                <constraint firstItem="IGI-av-nLY" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="bOA-Tf-yaW"/>
+                <constraint firstItem="6o0-xD-q4y" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="gNn-dC-tvT"/>
+                <constraint firstItem="6o0-xD-q4y" firstAttribute="top" secondItem="IGI-av-nLY" secondAttribute="bottom" id="mhC-hF-RZm"/>
+                <constraint firstItem="6o0-xD-q4y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="puW-hk-AEr"/>
+                <constraint firstItem="6o0-xD-q4y" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="ycu-ix-PvQ"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="DMX-4Q-5IJ"/>
+            <point key="canvasLocation" x="-288" y="10"/>
+        </view>
+    </objects>
+</document>

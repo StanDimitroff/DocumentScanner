@@ -34,9 +34,8 @@ final class RectangleDetector {
 
             let transformedRect = newObservation.boundingBox
 
-            if transformedRect.isEmpty {
-                print("bound empty");
-                return }
+            if transformedRect.isEmpty { return }
+            
             self.onRectDetect?(transformedRect)
         }
     }

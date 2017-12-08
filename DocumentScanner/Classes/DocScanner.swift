@@ -48,12 +48,32 @@ public final class DocScanner {
 
             let cropRect = self.camera.documentRect
 
-            assert(!cropRect.isEmpty, "Cannot crop image with empty region: \(cropRect)")
+            //assert(!cropRect.isEmpty, "Cannot crop image with empty region: \(cropRect)")
 
-            let croppedImage = photo.crop(toPreviewLayer: self.camera.cameraLayer, withRect: cropRect)
+            //if cropRect.isEmpty {
+                let cropView = CroppView(frame: self.presenter.view.frame)
+                cropView.imageView.image = photo
+                cropView.trackedRegion = cropRect
 
-            self.onImageExport?(croppedImage)
+                cropView.onRegionSave = {
+                    region in
+
+                    self.cropImage(photo, withRegion: region)
+                }
+
+                self.presenter.view.addSubview(cropView)
+
+                return
+           // }
+
+           // self.cropImage(photo, withRegion: cropRect)
         }
+    }
+
+    private func cropImage(_ photo: UIImage, withRegion region: CGRect) {
+        let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: region)
+
+        onImageExport?(croppedImage)
     }
 
     private func toggleIdle(disabled: Bool) {

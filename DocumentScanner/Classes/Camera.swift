@@ -88,11 +88,13 @@ final class Camera: NSObject {
                convertedRect.isEmpty ||
                convertedRect.isInfinite {
                 self.scannerView.trackView.frame = .zero
+                self.documentRect = .zero
 
                 return
             }
             
             self.scannerView.trackView.frame = convertedRect
+            self.scannerView.trackView.isHidden = false
             self.documentRect = convertedRect
         }
     }
@@ -113,7 +115,7 @@ final class Camera: NSObject {
     }
 
     private func capturePhoto() {
-        assert(!documentRect.isEmpty, "Rect of interest could not be empty: \(documentRect)")
+        //assert(!documentRect.isEmpty, "Rect of interest could not be empty: \(documentRect)")
 
         let settings = AVCapturePhotoSettings()
         settings.flashMode = .auto

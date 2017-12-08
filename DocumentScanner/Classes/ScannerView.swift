@@ -49,6 +49,7 @@ final class ScannerView: UIView {
 
         trackView?.layer.borderColor = UIColor.orange.cgColor
         trackView?.layer.borderWidth = 1
+        trackView?.isHidden = true
     }
 
     @IBAction func captureImage(_ sender: UIButton) {
