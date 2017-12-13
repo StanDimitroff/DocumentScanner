@@ -21,7 +21,7 @@ final class PreviewView: UIView {
     }
 
     public convenience init() {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
 
     private func setup() {

@@ -21,7 +21,7 @@ final class ScannerView: UIView {
     }
 
     convenience init() {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
 
     required init?(coder aDecoder: NSCoder) {

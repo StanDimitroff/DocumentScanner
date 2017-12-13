@@ -9,31 +9,56 @@ import UIKit
 
 class CroppView: UIView {
 
+    struct Position {
+        var leftUp: CGPoint      = .zero
+        var leftBottom: CGPoint  = .zero
+        var rigntUp: CGPoint     = .zero
+        var rightBottom: CGPoint = .zero
+    }
+
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var regionView: UIView!
 
-    private let dragGesture = UIPanGestureRecognizer()
+    private let regionView = RegionView()
 
-    var onRegionSave: ((CGRect) -> Void)?
-    var trackedRegion: CGRect! {
+    private let leftUpCorner      = CornerView()
+    private let rightUpCorner     = CornerView()
+
+    private let leftBottomCorner  = CornerView()
+    private let rightBottomCorner = CornerView()
+
+    private let maskLayer = CAShapeLayer()
+
+    private var regionPath = UIBezierPath()
+    private var position   = Position()
+
+    var onRetake: (() -> Void)?
+    var onRegionSave: ((UIBezierPath) -> Void)?
+
+    var trackedRegion: CGRect = .zero {
         didSet {
             if !trackedRegion.isEmpty {
                 regionView.frame = trackedRegion
-            }
+                regionPath = UIBezierPath(rect: trackedRegion)
+                position = Position(
+                    leftUp: trackedRegion.origin,
+                    leftBottom: CGPoint(x: trackedRegion.origin.x, y: trackedRegion.maxY),
+                    rigntUp: CGPoint(x: trackedRegion.maxX, y: trackedRegion.origin.y),
+                    rightBottom: CGPoint(x: trackedRegion.maxX, y: trackedRegion.maxY))
 
-            calculateMaskLayer()
+                regionView.updateBorderLayer(withPath: regionPath)
+                updateMaskLayer()
+                setInitialCorners()
+            }
         }
     }
 
-    var maskLayer = CAShapeLayer()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
 
     convenience init() {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -59,39 +84,99 @@ class CroppView: UIView {
             assertionFailure("Could not create a path to the bundle")
         }
 
-        regionView?.layer.borderColor = UIColor.white.cgColor
-        regionView?.layer.borderWidth = 1
+        addSubview(regionView)
 
-        dragGesture.delegate = self
-        addGestureRecognizer(dragGesture)
+        [leftUpCorner, rightUpCorner, leftBottomCorner, rightBottomCorner].forEach {
+            corner in
 
-        maskLayer.fillRule = kCAFillRuleEvenOdd
+            let dragGesture = UIPanGestureRecognizer()
+            dragGesture.addTarget(self, action: #selector(resizeRegion(_:)))
+            dragGesture.delegate = self
+
+            corner.addGestureRecognizer(dragGesture)
+
+            addSubview(corner)
+        }
+
         maskLayer.fillRule = kCAFillRuleEvenOdd
         maskLayer.fillColor = UIColor.black.cgColor
         maskLayer.opacity = 0
 
-        layer.addSublayer(maskLayer)
+        imageView.layer.addSublayer(maskLayer)
     }
 
-    func calculateMaskLayer() {
-        let outsidePath = UIBezierPath(rect: imageView.bounds)
-        let insidePath = UIBezierPath(rect: regionView.frame)
+    private func setInitialCorners() {
+        leftUpCorner.center = trackedRegion.origin
+        rightUpCorner.center = CGPoint(x: trackedRegion.maxX, y: trackedRegion.origin.y)
 
-        outsidePath.append(insidePath)
+        leftBottomCorner.center = CGPoint(x: trackedRegion.origin.x, y: trackedRegion.maxY)
+        rightBottomCorner.center = CGPoint(x: trackedRegion.maxX, y: trackedRegion.maxY)
+    }
+
+    private func updateMaskLayer() {
+        let outsidePath = UIBezierPath(rect: imageView.bounds)
+
+        outsidePath.append(regionPath)
 
         maskLayer.path = outsidePath.cgPath
-        maskLayer.opacity = 0.60
+        maskLayer.opacity = 0.50
+    }
+
+    @objc private func resizeRegion(_ gesture: UIPanGestureRecognizer) {
+        regionPath.removeAllPoints()
+
+        let currentPoint = gesture.location(in: imageView)
+        let cornerView   = gesture.view
+        cornerView?.center = currentPoint
+
+        regionPath.move(to: currentPoint)
+
+        if cornerView == leftUpCorner {
+            regionPath.addLine(to: position.rigntUp)
+            regionPath.addLine(to: position.rightBottom)
+            regionPath.addLine(to: position.leftBottom)
+
+            position.leftUp = currentPoint
+
+        } else if cornerView == leftBottomCorner {
+            regionPath.addLine(to: position.leftUp)
+            regionPath.addLine(to: position.rigntUp)
+            regionPath.addLine(to: position.rightBottom)
+
+            position.leftBottom = currentPoint
+        } else if cornerView == rightUpCorner {
+            regionPath.addLine(to: position.rightBottom)
+            regionPath.addLine(to: position.leftBottom)
+            regionPath.addLine(to: position.leftUp)
+
+            position.rigntUp = currentPoint
+
+        } else if cornerView == rightBottomCorner {
+            regionPath.addLine(to: position.leftBottom)
+            regionPath.addLine(to: position.leftUp)
+            regionPath.addLine(to: position.rigntUp)
+
+            position.rightBottom = currentPoint
+        }
+
+        regionPath.close()
+
+        regionView.updateBorderLayer(withPath: regionPath)
+        updateMaskLayer()
     }
 
     @IBAction func retake(_ sender: UIBarButtonItem) {
         // return to scanner
         self.removeFromSuperview()
+        onRetake?()
     }
 
     @IBAction func saveImage(_ sender: UIBarButtonItem) {
-        self.removeFromSuperview()
+        //self.removeFromSuperview()
 
         // TODO: export created region here
+        //let rect = regionPath.cgPath.boundingBoxOfPath
+        onRegionSave?(regionPath)
     }
 }
 

@@ -30,7 +30,7 @@ public final class DocScanner {
             presenter.view.addSubview(scannerView)
         }
         
-        camera.startSession()
+        camera.configureAndStartSessiion()
         observeCameraOutput()
 
         toggleIdle(disabled: true)
@@ -46,15 +46,21 @@ public final class DocScanner {
         camera.onPhotoCapture = {
             photo in
 
-            let cropRect = self.camera.documentRect
+            let regionRect = self.camera.documentRect
 
             //assert(!cropRect.isEmpty, "Cannot crop image with empty region: \(cropRect)")
 
             //if cropRect.isEmpty {
                 let cropView = CroppView(frame: self.presenter.view.frame)
                 cropView.imageView.image = photo
-                cropView.trackedRegion = cropRect
 
+                cropView.trackedRegion = regionRect
+
+                // return from manual cropping
+                cropView.onRetake = {
+                    self.camera.startSession()
+                }
+                                                                               
                 cropView.onRegionSave = {
                     region in
 
@@ -63,15 +69,24 @@ public final class DocScanner {
 
                 self.presenter.view.addSubview(cropView)
 
+                // stop camera when editing
+                self.camera.stopSession()
+
                 return
            // }
 
-           // self.cropImage(photo, withRegion: cropRect)
+           // self.cropImage(photo, withRegion: regionRect)
         }
     }
 
     private func cropImage(_ photo: UIImage, withRegion region: CGRect) {
         let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: region)
+
+        onImageExport?(croppedImage)
+    }
+
+    private func cropImage(_ photo: UIImage, withRegion region: UIBezierPath) {
+        let croppedImage = photo.imageByApplyingClippingBezierPath(region)
 
         onImageExport?(croppedImage)
     }

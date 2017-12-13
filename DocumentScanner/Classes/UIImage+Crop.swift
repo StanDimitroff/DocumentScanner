@@ -26,4 +26,32 @@ extension UIImage {
 
         return croppedUIImage
     }
+
+    func imageByApplyingClippingBezierPath(_ path: UIBezierPath) -> UIImage {
+        // Mask image using path
+        let maskedImage = imageByApplyingMaskingBezierPath(path)
+
+        // Crop image to frame of path
+        let croppedImage = UIImage(cgImage: maskedImage.cgImage!.cropping(to: path.bounds)!)
+        return croppedImage
+    }
+
+    func imageByApplyingMaskingBezierPath(_ path: UIBezierPath) -> UIImage {
+        // Define graphic context (canvas) to paint on
+        UIGraphicsBeginImageContext(size)
+        let context = UIGraphicsGetCurrentContext()!
+        context.saveGState()
+
+        // Set the clipping mask
+        path.addClip()
+        draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+
+        let maskedImage = UIGraphicsGetImageFromCurrentImageContext()!
+
+        // Restore previous drawing context
+        context.restoreGState()
+        UIGraphicsEndImageContext()
+
+        return maskedImage
+    }
 }

@@ -47,25 +47,12 @@ final class Camera: NSObject {
         prepared(cameraLayer, scannerView)
     }
 
-    func startSession() {
+    func configureAndStartSessiion() {
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.alwaysDiscardsLateVideoFrames = true
         videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "MyQueue"))
         captureSession.addOutput(videoOutput)
 
-        configureSessiion()
-
-        captureSession.startRunning()
-
-        observeDetectorOutput()
-        observeScannerViewActions()
-    }
-
-    func stopSession() {
-        captureSession.stopRunning()
-    }
-
-    private func configureSessiion() {
         captureSession.beginConfiguration()
 
         if captureSession.canAddOutput(capturePhotoOutput) {
@@ -73,6 +60,19 @@ final class Camera: NSObject {
         }
 
         captureSession.commitConfiguration()
+
+        startSession()
+
+        observeDetectorOutput()
+        observeScannerViewActions()
+    }
+
+    func startSession() {
+        captureSession.startRunning()
+    }
+
+    func stopSession() {
+        captureSession.stopRunning()
     }
 
     private func observeDetectorOutput() {
