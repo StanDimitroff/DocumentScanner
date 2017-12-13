@@ -20,12 +20,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IGI-av-nLY">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6o0-xD-q4y">
                     <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="COD-6l-M6S"/>
+                        <constraint firstAttribute="height" constant="44" id="pDQ-Y3-XI7"/>
                     </constraints>
                     <items>
                         <barButtonItem title="Retake" id="tC1-07-Z7Y">
@@ -44,13 +44,13 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="6o0-xD-q4y" firstAttribute="leading" secondItem="DMX-4Q-5IJ" secondAttribute="leading" id="4y7-nX-4ik"/>
+                <constraint firstItem="IGI-av-nLY" firstAttribute="bottom" secondItem="DMX-4Q-5IJ" secondAttribute="bottom" id="5wn-UT-a28"/>
                 <constraint firstItem="IGI-av-nLY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BIL-rK-tNx"/>
+                <constraint firstItem="6o0-xD-q4y" firstAttribute="bottom" secondItem="DMX-4Q-5IJ" secondAttribute="bottom" id="JfA-0X-cJ1"/>
                 <constraint firstItem="IGI-av-nLY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="bFV-1m-15h"/>
                 <constraint firstItem="IGI-av-nLY" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="bOA-Tf-yaW"/>
-                <constraint firstItem="6o0-xD-q4y" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="gNn-dC-tvT"/>
-                <constraint firstItem="6o0-xD-q4y" firstAttribute="top" secondItem="IGI-av-nLY" secondAttribute="bottom" id="mhC-hF-RZm"/>
-                <constraint firstItem="6o0-xD-q4y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="puW-hk-AEr"/>
-                <constraint firstItem="6o0-xD-q4y" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="ycu-ix-PvQ"/>
+                <constraint firstItem="6o0-xD-q4y" firstAttribute="trailing" secondItem="DMX-4Q-5IJ" secondAttribute="trailing" id="to3-hq-9Cr"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="DMX-4Q-5IJ"/>
             <point key="canvasLocation" x="-288.5" y="9.5"/>
