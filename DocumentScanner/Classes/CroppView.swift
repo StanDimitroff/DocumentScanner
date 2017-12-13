@@ -32,23 +32,11 @@ class CroppView: UIView {
     private var position   = Position()
 
     var onRetake: (() -> Void)?
-    var onRegionSave: ((UIBezierPath) -> Void)?
+    var onRegionSave: ((CGRect) -> Void)?
 
     var trackedRegion: CGRect = .zero {
         didSet {
-            if !trackedRegion.isEmpty {
-                regionView.frame = trackedRegion
-                regionPath = UIBezierPath(rect: trackedRegion)
-                position = Position(
-                    leftUp: trackedRegion.origin,
-                    leftBottom: CGPoint(x: trackedRegion.origin.x, y: trackedRegion.maxY),
-                    rigntUp: CGPoint(x: trackedRegion.maxX, y: trackedRegion.origin.y),
-                    rightBottom: CGPoint(x: trackedRegion.maxX, y: trackedRegion.maxY))
-
-                regionView.updateBorderLayer(withPath: regionPath)
-                updateMaskLayer()
-                setInitialCorners()
-            }
+            setInitialRegion()
         }
     }
 
@@ -105,6 +93,28 @@ class CroppView: UIView {
         imageView.layer.addSublayer(maskLayer)
     }
 
+    private func setInitialRegion() {
+        if trackedRegion.isEmpty {
+            let width = imageView.frame.width - 100
+            let initialRegion = CGRect(
+                origin: CGPoint(x: imageView.center.x - width / 2, y: imageView.center.y - width / 2),
+                size: CGSize(width: width, height: width))
+            trackedRegion = initialRegion
+        }
+
+        regionView.frame = trackedRegion
+        regionPath = UIBezierPath(rect: trackedRegion)
+        position = Position(
+            leftUp: trackedRegion.origin,
+            leftBottom: CGPoint(x: trackedRegion.origin.x, y: trackedRegion.maxY),
+            rigntUp: CGPoint(x: trackedRegion.maxX, y: trackedRegion.origin.y),
+            rightBottom: CGPoint(x: trackedRegion.maxX, y: trackedRegion.maxY))
+
+        regionView.updateBorderLayer(withPath: regionPath)
+        updateMaskLayer()
+        setInitialCorners()
+    }
+
     private func setInitialCorners() {
         leftUpCorner.center = trackedRegion.origin
         rightUpCorner.center = CGPoint(x: trackedRegion.maxX, y: trackedRegion.origin.y)
@@ -119,7 +129,7 @@ class CroppView: UIView {
         outsidePath.append(regionPath)
 
         maskLayer.path = outsidePath.cgPath
-        maskLayer.opacity = 0.50
+        maskLayer.opacity = 0.40
     }
 
     @objc private func resizeRegion(_ gesture: UIPanGestureRecognizer) {
@@ -127,6 +137,7 @@ class CroppView: UIView {
 
         let currentPoint = gesture.location(in: imageView)
         let cornerView   = gesture.view
+
         cornerView?.center = currentPoint
 
         regionPath.move(to: currentPoint)
@@ -172,11 +183,8 @@ class CroppView: UIView {
     }
 
     @IBAction func saveImage(_ sender: UIBarButtonItem) {
-        //self.removeFromSuperview()
-
-        // TODO: export created region here
-        //let rect = regionPath.cgPath.boundingBoxOfPath
-        onRegionSave?(regionPath)
+        self.removeFromSuperview()
+        onRegionSave?(regionPath.cgPath.boundingBoxOfPath)
     }
 }
 

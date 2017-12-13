@@ -31,6 +31,10 @@ class ViewController: UIViewController {
             
             self.previewView = PreviewView(frame: self.view.frame)
             self.previewView.imageView.image = image
+
+            self.previewView.onRescan = {
+                scanner.continueSession()
+            }
             
             self.view.addSubview(self.previewView)
         }

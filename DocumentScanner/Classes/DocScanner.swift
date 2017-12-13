@@ -22,6 +22,8 @@ public final class DocScanner {
 
     /// Start scanning
     public func startSession() {
+        assert(!camera.captureSession.isRunning, "Scanner is already running")
+        
         camera.prepareForSession {
             cameraLayer, scannerView in
 
@@ -36,10 +38,19 @@ public final class DocScanner {
         toggleIdle(disabled: true)
     }
 
+    public func continueSession() {
+        assert(!camera.captureSession.isRunning, "Scanner is already running")
+
+        camera.startSession()
+        toggleIdle(disabled: true)
+    }
+
     /// Stop scanning
     public func stopSession() {
-        camera.stopSession()
-        toggleIdle(disabled: false)
+        if camera.captureSession.isRunning {
+            camera.stopSession()
+            toggleIdle(disabled: false)
+        }
     }
 
     private func observeCameraOutput() {
@@ -58,7 +69,7 @@ public final class DocScanner {
 
                 // return from manual cropping
                 cropView.onRetake = {
-                    self.camera.startSession()
+                    self.continueSession()
                 }
                                                                                
                 cropView.onRegionSave = {
@@ -69,8 +80,8 @@ public final class DocScanner {
 
                 self.presenter.view.addSubview(cropView)
 
-                // stop camera when editing
-                self.camera.stopSession()
+                // stop session when editing
+                self.stopSession()
 
                 return
            // }
@@ -83,13 +94,14 @@ public final class DocScanner {
         let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: region)
 
         onImageExport?(croppedImage)
+        stopSession()
     }
 
-    private func cropImage(_ photo: UIImage, withRegion region: UIBezierPath) {
-        let croppedImage = photo.imageByApplyingClippingBezierPath(region)
-
-        onImageExport?(croppedImage)
-    }
+//    private func cropImage(_ photo: UIImage, withRegion region: UIBezierPath) {
+//        let croppedImage = photo.imageByApplyingClippingBezierPath(region)
+//
+//        onImageExport?(croppedImage)
+//    }
 
     private func toggleIdle(disabled: Bool) {
          UIApplication.shared.isIdleTimerDisabled = disabled

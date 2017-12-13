@@ -11,6 +11,8 @@ final class PreviewView: UIView {
 
     @IBOutlet weak var imageView: UIImageView!
 
+    var onRescan: (() -> Void)?
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -37,5 +39,6 @@ final class PreviewView: UIView {
 
     @IBAction func retake(_ sender: UIBarButtonItem) {
         self.removeFromSuperview()
+        onRescan?()
     }
 }
