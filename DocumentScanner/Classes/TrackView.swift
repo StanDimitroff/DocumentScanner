@@ -1,18 +1,18 @@
 //
-//  RegionView.swift
+//  TrackView.swift
 //  DocumentScanner
 //
-//  Created by Stanislav Dimitrov on 11.12.17.
+//  Created by Stanislav Dimitrov on 14.12.17.
 //
 
 import UIKit
 
-class RegionView: UIView {
+class TrackView: UIView {
 
     private let borderLayer = CAShapeLayer()
 
     init() {
-        super.init(frame: .zero)
+        super.init(frame: CGRect(x: 100, y: 100, width: 300, height: 300))
         setup()
     }
 
@@ -21,8 +21,8 @@ class RegionView: UIView {
     }
 
     private func setup() {
-        borderLayer.fillColor   = UIColor.clear.cgColor
-        borderLayer.strokeColor = UIColor.white.cgColor
+        borderLayer.fillColor   = UIColor(red: 0.243, green: 0.156, blue: 0.018, alpha: 0.3).cgColor
+        borderLayer.strokeColor = UIColor.orange.cgColor
         borderLayer.lineWidth   = 1
 
         layer.addSublayer(borderLayer)

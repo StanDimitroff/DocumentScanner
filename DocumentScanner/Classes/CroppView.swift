@@ -18,15 +18,14 @@ class CroppView: UIView {
 
     @IBOutlet weak var imageView: UIImageView!
 
-    private let regionView = RegionView()
-
     private let leftUpCorner      = CornerView()
     private let rightUpCorner     = CornerView()
 
     private let leftBottomCorner  = CornerView()
     private let rightBottomCorner = CornerView()
 
-    private let maskLayer = CAShapeLayer()
+    private let shapeLayer = CAShapeLayer()
+    private let maskLayer  = CAShapeLayer()
 
     private var regionPath = UIBezierPath()
     private var position   = Position()
@@ -72,8 +71,6 @@ class CroppView: UIView {
             assertionFailure("Could not create a path to the bundle")
         }
 
-        addSubview(regionView)
-
         [leftUpCorner, rightUpCorner, leftBottomCorner, rightBottomCorner].forEach {
             corner in
 
@@ -102,7 +99,6 @@ class CroppView: UIView {
             trackedRegion = initialRegion
         }
 
-        regionView.frame = trackedRegion
         regionPath = UIBezierPath(rect: trackedRegion)
         position = Position(
             leftUp: trackedRegion.origin,
@@ -110,7 +106,7 @@ class CroppView: UIView {
             rigntUp: CGPoint(x: trackedRegion.maxX, y: trackedRegion.origin.y),
             rightBottom: CGPoint(x: trackedRegion.maxX, y: trackedRegion.maxY))
 
-        regionView.updateBorderLayer(withPath: regionPath)
+        updateShapeLayer()
         updateMaskLayer()
         setInitialCorners()
     }
@@ -121,6 +117,15 @@ class CroppView: UIView {
 
         leftBottomCorner.center = CGPoint(x: trackedRegion.origin.x, y: trackedRegion.maxY)
         rightBottomCorner.center = CGPoint(x: trackedRegion.maxX, y: trackedRegion.maxY)
+    }
+
+    private func updateShapeLayer(){
+        shapeLayer.path        = regionPath.cgPath
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.fillColor   = UIColor.clear.cgColor
+        shapeLayer.lineWidth   = 1
+
+        imageView.layer.addSublayer(shapeLayer)
     }
 
     private func updateMaskLayer() {
@@ -140,39 +145,25 @@ class CroppView: UIView {
 
         cornerView?.center = currentPoint
 
-        regionPath.move(to: currentPoint)
-
         if cornerView == leftUpCorner {
-            regionPath.addLine(to: position.rigntUp)
-            regionPath.addLine(to: position.rightBottom)
-            regionPath.addLine(to: position.leftBottom)
-
             position.leftUp = currentPoint
-
         } else if cornerView == leftBottomCorner {
-            regionPath.addLine(to: position.leftUp)
-            regionPath.addLine(to: position.rigntUp)
-            regionPath.addLine(to: position.rightBottom)
-
             position.leftBottom = currentPoint
         } else if cornerView == rightUpCorner {
-            regionPath.addLine(to: position.rightBottom)
-            regionPath.addLine(to: position.leftBottom)
-            regionPath.addLine(to: position.leftUp)
-
             position.rigntUp = currentPoint
-
         } else if cornerView == rightBottomCorner {
-            regionPath.addLine(to: position.leftBottom)
-            regionPath.addLine(to: position.leftUp)
-            regionPath.addLine(to: position.rigntUp)
-
             position.rightBottom = currentPoint
         }
 
+        // draw according to clockwise
+        regionPath.move(to: position.leftUp)
+        regionPath.addLine(to: position.rigntUp)
+        regionPath.addLine(to: position.rightBottom)
+        regionPath.addLine(to: position.leftBottom)
+
         regionPath.close()
 
-        regionView.updateBorderLayer(withPath: regionPath)
+        updateShapeLayer()
         updateMaskLayer()
     }
 
@@ -184,7 +175,19 @@ class CroppView: UIView {
 
     @IBAction func saveImage(_ sender: UIBarButtonItem) {
         self.removeFromSuperview()
-        onRegionSave?(regionPath.cgPath.boundingBoxOfPath)
+
+        // calculate the crop region with the very near corners from path
+        let origin = CGPoint(
+            x: max(position.leftUp.x, position.leftBottom.x),
+            y: max(position.leftUp.y, position.rigntUp.y))
+
+        let size = CGSize(
+            width: min(position.rigntUp.x, position.rightBottom.x) - origin.x,
+            height: min(position.leftBottom.y, position.rightBottom.y) - origin.y)
+
+        let regionRect = CGRect(origin: origin, size: size)
+
+        onRegionSave?(regionRect)
     }
 }
 

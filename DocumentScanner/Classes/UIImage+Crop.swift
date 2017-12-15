@@ -27,6 +27,30 @@ extension UIImage {
         return croppedUIImage
     }
 
+    func crop(region: UIView) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(region.bounds.size, false, self.scale)
+
+        if let currentContext = UIGraphicsGetCurrentContext() {
+            region.layer.render(in: currentContext)
+        }
+
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+
+        UIGraphicsEndImageContext()
+
+        return newImage//?.resized(original: self)
+    }
+
+    func resized(original: UIImage) -> UIImage {
+        let size = original.size
+            UIGraphicsBeginImageContextWithOptions(size, false, self.scale)
+            defer { UIGraphicsEndImageContext() }
+            draw(in: CGRect(origin: .zero, size: size))
+
+            guard let context = UIGraphicsGetImageFromCurrentImageContext() else { return self }
+            return context
+    }
+
     func imageByApplyingClippingBezierPath(_ path: UIBezierPath) -> UIImage {
         // Mask image using path
         let maskedImage = imageByApplyingMaskingBezierPath(path)
@@ -53,5 +77,26 @@ extension UIImage {
         UIGraphicsEndImageContext()
 
         return maskedImage
+    }
+
+    func clip(_ path: UIBezierPath) -> UIImage! {
+        let frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+
+        UIGraphicsBeginImageContextWithOptions(self.size, false, 0.0)
+        let context = UIGraphicsGetCurrentContext()
+        context?.saveGState()
+        path.addClip()
+        self.draw(in: frame)
+
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        context?.restoreGState()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+}
+
+extension CGPoint {
+    func scaled(to size: CGSize) -> CGPoint {
+        return CGPoint(x: self.x * size.width, y: self.y * size.height)
     }
 }

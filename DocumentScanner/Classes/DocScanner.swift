@@ -97,12 +97,6 @@ public final class DocScanner {
         stopSession()
     }
 
-//    private func cropImage(_ photo: UIImage, withRegion region: UIBezierPath) {
-//        let croppedImage = photo.imageByApplyingClippingBezierPath(region)
-//
-//        onImageExport?(croppedImage)
-//    }
-
     private func toggleIdle(disabled: Bool) {
          UIApplication.shared.isIdleTimerDisabled = disabled
     }

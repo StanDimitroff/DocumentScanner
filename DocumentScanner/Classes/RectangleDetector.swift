@@ -18,6 +18,7 @@ final class RectangleDetector {
         request.minimumConfidence = 0.6
         request.minimumSize = 0.3
         request.quadratureTolerance = 45
+        request.preferBackgroundProcessing = true
 
         do {
             try visionSequenceHandler.perform([request], on: pixelBuffer)
