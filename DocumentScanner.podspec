@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DocumentScanner'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'Simple documents scanner using Vision'
 
 # This description is used to generate tags and improve search results.
