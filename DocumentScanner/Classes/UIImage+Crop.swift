@@ -27,30 +27,6 @@ extension UIImage {
         return croppedUIImage
     }
 
-    func crop(region: UIView) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(region.bounds.size, false, self.scale)
-
-        if let currentContext = UIGraphicsGetCurrentContext() {
-            region.layer.render(in: currentContext)
-        }
-
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-
-        UIGraphicsEndImageContext()
-
-        return newImage//?.resized(original: self)
-    }
-
-    func resized(original: UIImage) -> UIImage {
-        let size = original.size
-            UIGraphicsBeginImageContextWithOptions(size, false, self.scale)
-            defer { UIGraphicsEndImageContext() }
-            draw(in: CGRect(origin: .zero, size: size))
-
-            guard let context = UIGraphicsGetImageFromCurrentImageContext() else { return self }
-            return context
-    }
-
     func imageByApplyingClippingBezierPath(_ path: UIBezierPath) -> UIImage {
         // Mask image using path
         let maskedImage = imageByApplyingMaskingBezierPath(path)
@@ -92,6 +68,41 @@ extension UIImage {
         context?.restoreGState()
         UIGraphicsEndImageContext()
         return newImage
+    }
+
+    func flatten() -> UIImage {
+        let ciImage = CIImage(image: self)!
+
+        let ciContext =  CIContext()
+
+        let detector = CIDetector(ofType: CIDetectorTypeRectangle,
+                                  context: ciContext,
+                                  options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
+
+        let rect = detector.features(in: ciImage).first as! CIRectangleFeature
+
+
+
+        let flattenedImage = ciImage.applyingFilter("CIPerspectiveCorrection", parameters: [
+
+            "inputTopLeft": CIVector(cgPoint: rect.topLeft),
+            "inputTopRight": CIVector(cgPoint: rect.topRight),
+            "inputBottomLeft": CIVector(cgPoint: rect.bottomLeft),
+            "inputBottomRight": CIVector(cgPoint: rect.bottomRight)
+
+
+            ])
+
+        UIGraphicsBeginImageContext(CGSize(width: flattenedImage.extent.size.height, height: flattenedImage.extent.size.width))
+
+        UIImage(ciImage:ciImage,scale:1.0,orientation:.right).draw(in: CGRect(x: 0, y: 0, width: ciImage.extent.size.height, height: ciImage.extent.size.width))
+
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+
+
+        UIGraphicsEndImageContext()
+        return image!
+
     }
 }
 

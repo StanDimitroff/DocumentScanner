@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DocumentScanner'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'Simple documents scanner using Vision'
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-DocumentScanner is based on rectangle detection and crops region of interest
+DocumentScanner is based on rectangle detection, crops region of interest and exports UIImage
                        DESC
 
   s.homepage         = 'https://github.com/StanDimitroff/DocumentScanner'

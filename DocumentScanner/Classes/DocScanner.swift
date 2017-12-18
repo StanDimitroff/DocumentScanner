@@ -38,6 +38,7 @@ public final class DocScanner {
         toggleIdle(disabled: true)
     }
 
+    /// Restore stopped scanner session
     public func continueSession() {
         assert(!camera.captureSession.isRunning, "Scanner is already running")
 

@@ -23,6 +23,7 @@ class ViewController: UIViewController {
         let scanner = DocScanner(presenter: self)
         scanner.startSession()
 
+        // this automatically stops scanner session
         scanner.onImageExport = { [weak self]
             
             image in
@@ -33,6 +34,7 @@ class ViewController: UIViewController {
             self.previewView.imageView.image = image
 
             self.previewView.onRescan = {
+                // continue session on current scanner instance
                 scanner.continueSession()
             }
             

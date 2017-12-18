@@ -13,7 +13,7 @@ final class Camera: NSObject {
     private let rectDetector       = RectangleDetector()
     private let capturePhotoOutput = AVCapturePhotoOutput()
 
-    private(set) var scannerView   = ScannerView()
+    private var scannerView   = ScannerView()
     private(set) var documentRect  = CGRect()
 
     var onPhotoCapture: ((UIImage) -> Void)?
