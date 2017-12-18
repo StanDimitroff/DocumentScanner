@@ -13,7 +13,7 @@ final class Camera: NSObject {
     private let rectDetector       = RectangleDetector()
     private let capturePhotoOutput = AVCapturePhotoOutput()
 
-    private var scannerView   = ScannerView()
+    private var scannerView        = ScannerView()
     private(set) var documentRect  = CGRect()
 
     var onPhotoCapture: ((UIImage) -> Void)?
@@ -107,11 +107,11 @@ final class Camera: NSObject {
             self.capturePhoto()
         }
 
-        scannerView.onDismiss = { [weak self] in
-            guard let `self` = self else { return }
-
-            self.stopSession()
-        }
+//        scannerView.onDismiss = { [weak self] in
+//            guard let `self` = self else { return }
+//
+//            self.stopSession()
+//        }
     }
 
     private func capturePhoto() {

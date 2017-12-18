@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScannerView" customModule="DocumentScanner" customModuleProvider="target">
             <connections>
                 <outlet property="cameraView" destination="Waz-X1-bOv" id="FE5-Ds-ASJ"/>
+                <outlet property="cancelButton" destination="zmY-aH-4QR" id="4fA-qS-2uU"/>
                 <outlet property="trackView" destination="gFB-wQ-WhS" id="532-sh-fcf"/>
             </connections>
         </placeholder>

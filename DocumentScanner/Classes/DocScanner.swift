@@ -15,6 +15,9 @@ public final class DocScanner {
     /// Exports scanned image
     public var onImageExport: ((UIImage) -> Void)?
 
+    /// Dismiss scanner handler
+    public var onDismiss: (() -> Void)?
+
     /// Construct scanner object
     public init(presenter: UIViewController) {
         self.presenter = presenter
@@ -29,6 +32,12 @@ public final class DocScanner {
 
             cameraLayer.frame = presenter.view.bounds
             scannerView.frame = presenter.view.frame
+
+            scannerView.onDismiss = {
+                self.onDismiss?()
+                self.stopSession()
+            }
+            
             presenter.view.addSubview(scannerView)
         }
         

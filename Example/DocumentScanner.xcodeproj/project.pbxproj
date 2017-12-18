@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E5EDE83C89CFDBA46B2FD6A /* Pods_DocumentScanner_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C856CDC596E48FD6E8DE822 /* Pods_DocumentScanner_Tests.framework */; };
+		441213CC1FE7EA96009B059D /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441213CB1FE7EA96009B059D /* ScannerViewController.swift */; };
 		4480FEFA1FD0246F006D99B6 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4480FEF91FD0246E006D99B6 /* PreviewView.swift */; };
 		4480FEFC1FD02641006D99B6 /* PreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4480FEFB1FD0248E006D99B6 /* PreviewView.xib */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		37222C1CD7B9DC95A0852BAC /* Pods-DocumentScanner_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DocumentScanner_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-DocumentScanner_Example/Pods-DocumentScanner_Example.release.xcconfig"; sourceTree = "<group>"; };
+		441213CB1FE7EA96009B059D /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		4480FEF91FD0246E006D99B6 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		4480FEFB1FD0248E006D99B6 /* PreviewView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewView.xib; sourceTree = "<group>"; };
 		4EAFCCFA132284D03B9117A9 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				441213CB1FE7EA96009B059D /* ScannerViewController.swift */,
 				4480FEF91FD0246E006D99B6 /* PreviewView.swift */,
 				4480FEFB1FD0248E006D99B6 /* PreviewView.xib */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -388,6 +391,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				4480FEFA1FD0246F006D99B6 /* PreviewView.swift in Sources */,
+				441213CC1FE7EA96009B059D /* ScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,7 +478,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -520,7 +524,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

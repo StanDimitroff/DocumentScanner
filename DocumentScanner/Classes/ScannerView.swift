@@ -11,7 +11,8 @@ final class ScannerView: UIView {
 
     @IBOutlet var cameraView: UIView!
     @IBOutlet var trackView: UIView!
-    
+    @IBOutlet weak var cancelButton: UIButton!
+
     var onImageCapture: (() -> Void)?
     var onDismiss: (() -> Void)?
 
@@ -50,6 +51,8 @@ final class ScannerView: UIView {
         trackView?.layer.borderColor = UIColor.orange.cgColor
         trackView?.layer.borderWidth = 1
         trackView?.isHidden = true
+
+        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "Cancel"), for: .normal)
     }
 
     @IBAction func captureImage(_ sender: UIButton) {
@@ -58,6 +61,5 @@ final class ScannerView: UIView {
 
     @IBAction func dismiss(_ sender: UIButton) {
         onDismiss?()
-        self.removeFromSuperview()
     }
 }

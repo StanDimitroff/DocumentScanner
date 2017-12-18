@@ -16,7 +16,10 @@ class CroppView: UIView {
         var rightBottom: CGPoint = .zero
     }
 
+    // MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var retakeButton: UIBarButtonItem!
+    @IBOutlet weak var keepButton: UIBarButtonItem!
 
     private let leftUpCorner      = CornerView()
     private let rightUpCorner     = CornerView()
@@ -70,6 +73,9 @@ class CroppView: UIView {
         } else {
             assertionFailure("Could not create a path to the bundle")
         }
+
+        retakeButton.title = NSLocalizedString("Retake", comment: "Retake")
+        keepButton.title   = NSLocalizedString("Crop", comment: "Crop")
 
         [leftUpCorner, rightUpCorner, leftBottomCorner, rightBottomCorner].forEach {
             corner in
