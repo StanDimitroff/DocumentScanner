@@ -18,31 +18,36 @@ class ScannerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let scanner = DocScanner(presenter: self)
-        scanner.startSession()
+        if #available(iOS 11.0, *) {
+            let scanner = DocScanner(presenter: self)
 
-        // this automatically stops scanner session
-        scanner.onImageExport = { [weak self]
+            scanner.startSession()
 
-            image in
+            // this automatically stops scanner session
+            scanner.onImageExport = { [weak self]
 
-            guard let `self` = self else { return }
+                image in
 
-            self.previewView = PreviewView(frame: self.view.frame)
-            self.previewView.imageView.image = image
+                guard let `self` = self else { return }
 
-            self.previewView.onRescan = {
-                // continue session on current scanner instance
-                scanner.continueSession()
+                self.previewView = PreviewView(frame: self.view.frame)
+                self.previewView.imageView.image = image
+
+                self.previewView.onRescan = {
+                    // continue session on current scanner instance
+                    scanner.continueSession()
+                }
+
+                self.view.addSubview(self.previewView)
             }
 
-            self.view.addSubview(self.previewView)
-        }
+            scanner.onDismiss = { [weak self] in
 
-        scanner.onDismiss = { [weak self] in
-
-            guard let `self` = self else { return }
-            self.dismiss(animated: true, completion: nil)
+                guard let `self` = self else { return }
+                self.dismiss(animated: true, completion: nil)
+            }
+        } else {
+            print("DocumentScanner not available before iOS 11")
         }
     }
 }

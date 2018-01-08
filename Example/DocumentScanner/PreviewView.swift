@@ -1,6 +1,6 @@
 //
 //  PreviewView.swift
-//  DocumentScanner
+//  DocumentScanner_Example
 //
 //  Created by Stanislav Dimitrov on 21.11.17.
 //

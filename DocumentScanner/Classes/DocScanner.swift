@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available (iOS 11.0, *)
 public final class DocScanner {
 
     private var presenter: UIViewController
@@ -75,7 +76,7 @@ public final class DocScanner {
                 let cropView = CroppView(frame: self.presenter.view.frame)
                 cropView.imageView.image = photo
 
-                cropView.trackedRegion = regionRect
+               cropView.trackedRegion = regionRect
 
                 // return from manual cropping
                 cropView.onRetake = {

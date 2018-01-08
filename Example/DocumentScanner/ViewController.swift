@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  DocumentScanner
+//  DocumentScanner_Example
 //
 //  Created by StanDimitroff on 11/20/2017.
 //  Copyright (c) 2017 StanDimitroff. All rights reserved.
@@ -20,4 +20,3 @@ class ViewController: UIViewController {
         present(scannerVC, animated: true, completion: nil)
     }
 }
-

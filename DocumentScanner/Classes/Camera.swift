@@ -8,6 +8,7 @@
 import Foundation
 import AVFoundation
 
+@available (iOS 11.0, *)
 final class Camera: NSObject {
     
     private let rectDetector       = RectangleDetector()
@@ -106,12 +107,6 @@ final class Camera: NSObject {
 
             self.capturePhoto()
         }
-
-//        scannerView.onDismiss = { [weak self] in
-//            guard let `self` = self else { return }
-//
-//            self.stopSession()
-//        }
     }
 
     private func capturePhoto() {
@@ -134,6 +129,7 @@ final class Camera: NSObject {
 }
 
 // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
+@available(iOS 11.0, *)
 extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(
         _ output: AVCaptureOutput,
@@ -148,6 +144,7 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 // MARK: - AVCapturePhotoCaptureDelegate
+@available(iOS 11.0, *)
 extension Camera: AVCapturePhotoCaptureDelegate {
     func photoOutput(
         _ output: AVCapturePhotoOutput,

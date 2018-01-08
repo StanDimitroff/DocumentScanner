@@ -8,6 +8,7 @@
 import Foundation
 import Vision
 
+@available (iOS 11.0, *)
 final class RectangleDetector {
 
     var onRectDetect: ((CGRect) -> Void)?
