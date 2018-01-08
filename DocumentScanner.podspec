@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DocumentScanner'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'Simple documents scanner using Vision'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ DocumentScanner is based on rectangle detection, crops region of interest and ex
   s.source           = { :git => 'https://github.com/StanDimitroff/DocumentScanner.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'DocumentScanner/Classes/**/*.swift'
 
