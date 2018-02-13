@@ -70,7 +70,7 @@ extension UIImage {
         return newImage
     }
 
-    func flatten() -> UIImage {
+    var flattened: UIImage {
         let ciImage = CIImage(image: self)!
 
         let ciContext =  CIContext()
@@ -79,30 +79,64 @@ extension UIImage {
                                   context: ciContext,
                                   options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
 
-        let rect = detector.features(in: ciImage).first as! CIRectangleFeature
+        guard let rect = detector.features(in: ciImage).first as? CIRectangleFeature else { return self }
 
 
+        let perspectiveCorrection = CIFilter(name: "CIPerspectiveCorrection")!
 
-        let flattenedImage = ciImage.applyingFilter("CIPerspectiveCorrection", parameters: [
+        perspectiveCorrection.setValue(CIVector(cgPoint: rect.topLeft),
+                                       forKey: "inputTopLeft")
+        perspectiveCorrection.setValue(CIVector(cgPoint: rect.topRight),
+                                       forKey: "inputTopRight")
+        perspectiveCorrection.setValue(CIVector(cgPoint: rect.bottomRight),
+                                       forKey: "inputBottomRight")
+        perspectiveCorrection.setValue(CIVector(cgPoint :rect.bottomLeft),
+                                       forKey: "inputBottomLeft")
 
-            "inputTopLeft": CIVector(cgPoint: rect.topLeft),
-            "inputTopRight": CIVector(cgPoint: rect.topRight),
-            "inputBottomLeft": CIVector(cgPoint: rect.bottomLeft),
-            "inputBottomRight": CIVector(cgPoint: rect.bottomRight)
+        perspectiveCorrection.setValue(ciImage,
+                                       forKey: kCIInputImageKey)
+
+//        let perspectiveCorrectionRect = perspectiveCorrection.outputImage!.extent
+//        let cropRect = perspectiveCorrection.outputImage!.extent.offsetBy(
+//            dx: ciImage.extent.midX - perspectiveCorrectionRect.midX,
+//            dy: ciImage.extent.midY - perspectiveCorrectionRect.midY)
 
 
-            ])
+        if let output = perspectiveCorrection.outputImage,
+            let cgImage = ciContext.createCGImage(output, from: output.extent) {
+            return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
+        }
 
-        UIGraphicsBeginImageContext(CGSize(width: flattenedImage.extent.size.height, height: flattenedImage.extent.size.width))
+        return self
+    }
 
-        UIImage(ciImage:ciImage,scale:1.0,orientation:.right).draw(in: CGRect(x: 0, y: 0, width: ciImage.extent.size.height, height: ciImage.extent.size.width))
+    var noiseReducted: UIImage {
+        let context = CIContext(options: nil)
 
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        guard let noiseReduction = CIFilter(name: "CINoiseReduction") else { return self }
 
+        noiseReduction.setValue(CIImage(image: self), forKey: kCIInputImageKey)
+        noiseReduction.setValue(0.02, forKey: "inputNoiseLevel")
+        noiseReduction.setValue(0.40, forKey: "inputSharpness")
 
-        UIGraphicsEndImageContext()
-        return image!
+        if let output = noiseReduction.outputImage,
+            let cgImage = context.createCGImage(output, from: output.extent) {
+            return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
+        }
 
+        return self
+    }
+
+    var grayscaled: UIImage {
+        let context = CIContext(options: nil)
+        guard let currentFilter = CIFilter(name: "CIPhotoEffectNoir") else { return self }
+        currentFilter.setValue(CIImage(image: self), forKey: kCIInputImageKey)
+        if let output = currentFilter.outputImage,
+            let cgImage = context.createCGImage(output, from: output.extent) {
+            return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
+        }
+
+        return self
     }
 }
 

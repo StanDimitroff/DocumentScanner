@@ -17,7 +17,7 @@ final class RectangleDetector {
     func detect(on pixelBuffer: CVPixelBuffer) {
         let request = VNDetectRectanglesRequest(completionHandler: handleVisionRequestUpdate)
         request.minimumConfidence = 0.6
-        request.minimumSize = 0.3
+        //request.minimumSize = 0.3
         request.quadratureTolerance = 45
         request.preferBackgroundProcessing = true
 

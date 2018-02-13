@@ -102,9 +102,13 @@ public final class DocScanner {
     }
 
     private func cropImage(_ photo: UIImage, withRegion region: CGRect) {
-        let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: region)
 
-        onImageExport?(croppedImage)
+        //let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: region)
+
+        let flattened = photo.flattened
+        let cropped = flattened.crop(toPreviewLayer: camera.cameraLayer, withRect: region)
+
+        onImageExport?(cropped.noiseReducted.grayscaled)
         stopSession()
     }
 
