@@ -9,7 +9,15 @@ import UIKit
 
 class CornerView: UIView {
 
-    init() {
+    enum Position {
+        case topLeft, topRight, bottomRight, bottomLeft
+    }
+
+    let position: Position
+
+    init(position: Position) {
+        self.position = position
+        
         super.init(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
         setup()
     }

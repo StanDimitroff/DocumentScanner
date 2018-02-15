@@ -26,7 +26,7 @@ DocumentScanner is based on rectangle detection, crops region of interest and ex
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'StanDimitroff' => 'standimitroff@gmail.com' }
   s.source           = { :git => 'https://github.com/StanDimitroff/DocumentScanner.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://twitter.com/standimitroff'
 
   s.ios.deployment_target = '10.0'
 

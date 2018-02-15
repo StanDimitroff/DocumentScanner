@@ -15,7 +15,7 @@ final class Camera: NSObject {
     private let capturePhotoOutput = AVCapturePhotoOutput()
 
     private var scannerView        = ScannerView()
-    private(set) var documentRect  = CGRect()
+    private(set) var observationRect = ObservationRectangle()
 
     var onPhotoCapture: ((UIImage) -> Void)?
 
@@ -76,27 +76,24 @@ final class Camera: NSObject {
         captureSession.stopRunning()
     }
 
-    private func observeDetectorOutput() {
+    private func observeDetectorOutput() {        
         rectDetector.onRectDetect = { [weak self]
-            newFrame in
+            rect, newFrame in
 
             guard let `self` = self else { return }
 
-            // calculate view rect
-            let convertedRect = self.cameraLayer.layerRectConverted(fromMetadataOutputRect: newFrame)
+            self.observationRect = rect
 
-            if convertedRect.isNull ||
-               convertedRect.isEmpty ||
-               convertedRect.isInfinite {
-                self.scannerView.trackView.frame = .zero
-                self.documentRect = .zero
+            let topLeft     = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: rect.topLeft)
+            let topRight    = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: rect.topRight)
+            let bottomRight = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: rect.bottomRight)
+            let bottomLeft  = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: rect.bottomLeft)
 
-                return
-            }
-            
-            self.scannerView.trackView.frame = convertedRect
-            self.scannerView.trackView.isHidden = false
-            self.documentRect = convertedRect
+            self.scannerView.observationRect = ObservationRectangle(
+                topLeft: topLeft,
+                topRight: topRight,
+                bottomRight: bottomRight,
+                bottomLeft: bottomLeft)
         }
     }
 
@@ -110,8 +107,6 @@ final class Camera: NSObject {
     }
 
     private func capturePhoto() {
-        //assert(!documentRect.isEmpty, "Rect of interest could not be empty: \(documentRect)")
-
         let settings = AVCapturePhotoSettings()
         settings.flashMode = .auto
         settings.isAutoStillImageStabilizationEnabled = true
@@ -158,5 +153,3 @@ extension Camera: AVCapturePhotoCaptureDelegate {
         onPhotoCapture?(image)
     }
 }
-
-

@@ -68,47 +68,60 @@ public final class DocScanner {
         camera.onPhotoCapture = {
             photo in
 
-            let regionRect = self.camera.documentRect
-
-            //assert(!cropRect.isEmpty, "Cannot crop image with empty region: \(cropRect)")
-
-            //if cropRect.isEmpty {
-                let cropView = CroppView(frame: self.presenter.view.frame)
-                cropView.imageView.image = photo
-
-               cropView.trackedRegion = regionRect
-
-                // return from manual cropping
-                cropView.onRetake = {
-                    self.continueSession()
-                }
-                                                                               
-                cropView.onRegionSave = {
-                    region in
-
-                    self.cropImage(photo, withRegion: region)
-                }
-
-                self.presenter.view.addSubview(cropView)
-
-                // stop session when editing
+            if let flattened = photo.flattened(rect: self.camera.observationRect) {
+                self.onImageExport?(flattened.noiseReducted)
                 self.stopSession()
 
                 return
-           // }
+            }
 
-           // self.cropImage(photo, withRegion: regionRect)
+            // manual crop
+            let cropView = CroppView(frame: self.presenter.view.frame)
+            cropView.imageView.image = photo
+            cropView.observationRect = self.camera.observationRect
+
+            // return from manual cropping
+            cropView.onRetake = {
+                self.continueSession()
+            }
+
+            cropView.onRegionSave = {
+                region in
+
+                if let flattened = photo.flattened(rect: region) {
+                    self.onImageExport?(flattened.noiseReducted)
+                    self.stopSession()
+
+                    return
+                }
+
+                self.cropImage(photo, withRegion: region)
+            }
+
+            self.presenter.view.addSubview(cropView)
+
+            // stop session when editing
+            self.stopSession()
+
+            return
         }
     }
 
-    private func cropImage(_ photo: UIImage, withRegion region: CGRect) {
+    private func cropImage(_ photo: UIImage, withRegion region: ObservationRectangle) {
+        // calculate the crop region with the very near corners from path
+        let origin = CGPoint(
+            x: max(region.topLeft.x, region.bottomLeft.x),
+            y: max(region.topLeft.y, region.topRight.y))
 
-        //let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: region)
+        let size = CGSize(
+            width: min(region.topRight.x, region.bottomRight.x) - origin.x,
+            height: min(region.bottomLeft.y, region.bottomRight.y) - origin.y)
 
-        let flattened = photo.flattened
-        let cropped = flattened.crop(toPreviewLayer: camera.cameraLayer, withRect: region)
+        let regionRect = CGRect(origin: origin, size: size)
 
-        onImageExport?(cropped.noiseReducted.grayscaled)
+        let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: regionRect)
+
+        onImageExport?(croppedImage.noiseReducted)
         stopSession()
     }
 

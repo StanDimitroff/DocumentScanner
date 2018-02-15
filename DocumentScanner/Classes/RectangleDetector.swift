@@ -11,13 +11,13 @@ import Vision
 @available (iOS 11.0, *)
 final class RectangleDetector {
 
-    var onRectDetect: ((CGRect) -> Void)?
+    var onRectDetect: ((ObservationRectangle, CGRect) -> Void)?
     private let visionSequenceHandler = VNSequenceRequestHandler()
 
     func detect(on pixelBuffer: CVPixelBuffer) {
         let request = VNDetectRectanglesRequest(completionHandler: handleVisionRequestUpdate)
-        request.minimumConfidence = 0.6
-        //request.minimumSize = 0.3
+        request.minimumConfidence   = 0.6
+        request.minimumSize         = 0.3
         request.quadratureTolerance = 45
         request.preferBackgroundProcessing = true
 
@@ -32,13 +32,19 @@ final class RectangleDetector {
         DispatchQueue.main.async {
             // make sure we have an actual result
             guard let newObservation = request.results?.first as? VNRectangleObservation
-                else { self.onRectDetect?(.zero); return }
+                else { self.onRectDetect?(.zero, .zero); return }
 
             let transformedRect = newObservation.boundingBox
 
+            var observationRect = ObservationRectangle()
+            observationRect.topLeft     = newObservation.topLeft
+            observationRect.topRight    = newObservation.topRight
+            observationRect.bottomRight = newObservation.bottomRight
+            observationRect.bottomLeft  = newObservation.bottomLeft
+
             if transformedRect.isEmpty { return }
             
-            self.onRectDetect?(transformedRect)
+            self.onRectDetect?(observationRect, transformedRect)
         }
     }
 }

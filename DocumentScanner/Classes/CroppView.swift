@@ -9,34 +9,26 @@ import UIKit
 
 class CroppView: UIView {
 
-    struct Position {
-        var leftUp: CGPoint      = .zero
-        var leftBottom: CGPoint  = .zero
-        var rigntUp: CGPoint     = .zero
-        var rightBottom: CGPoint = .zero
-    }
-
     // MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var retakeButton: UIBarButtonItem!
     @IBOutlet weak var keepButton: UIBarButtonItem!
 
-    private let leftUpCorner      = CornerView()
-    private let rightUpCorner     = CornerView()
+    private let topLeftCorner     = CornerView(position: .topLeft)
+    private let topRightCorner    = CornerView(position: .topRight)
 
-    private let leftBottomCorner  = CornerView()
-    private let rightBottomCorner = CornerView()
+    private let bottomRightCorner = CornerView(position: .bottomRight)
+    private let bottomLeftCorner  = CornerView(position: .bottomLeft)
 
     private let shapeLayer = CAShapeLayer()
     private let maskLayer  = CAShapeLayer()
 
     private var regionPath = UIBezierPath()
-    private var position   = Position()
 
     var onRetake: (() -> Void)?
-    var onRegionSave: ((CGRect) -> Void)?
+    var onRegionSave: ((ObservationRectangle) -> Void)?
 
-    var trackedRegion: CGRect = .zero {
+    var observationRect: ObservationRectangle = .zero {
         didSet {
             setInitialRegion()
         }
@@ -77,7 +69,7 @@ class CroppView: UIView {
         retakeButton.title = NSLocalizedString("Retake", comment: "Retake")
         keepButton.title   = NSLocalizedString("Crop", comment: "Crop")
 
-        [leftUpCorner, rightUpCorner, leftBottomCorner, rightBottomCorner].forEach {
+        [topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner].forEach {
             corner in
 
             let dragGesture = UIPanGestureRecognizer()
@@ -97,35 +89,29 @@ class CroppView: UIView {
     }
 
     private func setInitialRegion() {
-        if trackedRegion.isEmpty {
+        if observationRect.isEmpty {
             let width = imageView.frame.width - 100
-            let initialRegion = CGRect(
-                origin: CGPoint(x: imageView.center.x - width / 2, y: imageView.center.y - width / 2),
-                size: CGSize(width: width, height: width))
-            trackedRegion = initialRegion
+            observationRect = ObservationRectangle(
+                topLeft: CGPoint(x: imageView.center.x - width / 2, y: imageView.center.y - width / 2),
+                topRight: CGPoint(x: imageView.center.x + width / 2, y: imageView.center.y - width / 2),
+                bottomRight: CGPoint(x: imageView.center.x + width / 2, y: imageView.center.y + width / 2),
+                bottomLeft: CGPoint(x: imageView.center.x - width / 2, y: imageView.center.y + width / 2)
+            )
         }
 
-        regionPath = UIBezierPath(rect: trackedRegion)
-        position = Position(
-            leftUp: trackedRegion.origin,
-            leftBottom: CGPoint(x: trackedRegion.origin.x, y: trackedRegion.maxY),
-            rigntUp: CGPoint(x: trackedRegion.maxX, y: trackedRegion.origin.y),
-            rightBottom: CGPoint(x: trackedRegion.maxX, y: trackedRegion.maxY))
-
-        updateShapeLayer()
-        updateMaskLayer()
+        drawPath()
         setInitialCorners()
     }
 
     private func setInitialCorners() {
-        leftUpCorner.center = trackedRegion.origin
-        rightUpCorner.center = CGPoint(x: trackedRegion.maxX, y: trackedRegion.origin.y)
+        topLeftCorner.center     = observationRect.topLeft
+        topRightCorner.center    = observationRect.topRight
 
-        leftBottomCorner.center = CGPoint(x: trackedRegion.origin.x, y: trackedRegion.maxY)
-        rightBottomCorner.center = CGPoint(x: trackedRegion.maxX, y: trackedRegion.maxY)
+        bottomRightCorner.center = observationRect.bottomRight
+        bottomLeftCorner.center  = observationRect.bottomLeft
     }
 
-    private func updateShapeLayer(){
+    private func updateShapeLayer() {
         shapeLayer.path        = regionPath.cgPath
         shapeLayer.strokeColor = UIColor.white.cgColor
         shapeLayer.fillColor   = UIColor.clear.cgColor
@@ -144,28 +130,27 @@ class CroppView: UIView {
     }
 
     @objc private func resizeRegion(_ gesture: UIPanGestureRecognizer) {
+        let currentPoint = gesture.location(in: imageView)
+        guard let cornerView   = gesture.view as? CornerView else { return }
+
+        cornerView.center = currentPoint
+
+        switch cornerView.position {
+        case .topLeft: observationRect.topLeft         = currentPoint
+        case .topRight: observationRect.topRight       = currentPoint
+        case .bottomRight: observationRect.bottomRight = currentPoint
+        case .bottomLeft: observationRect.bottomLeft   = currentPoint
+        }
+    }
+
+    private func drawPath() {
         regionPath.removeAllPoints()
 
-        let currentPoint = gesture.location(in: imageView)
-        let cornerView   = gesture.view
-
-        cornerView?.center = currentPoint
-
-        if cornerView == leftUpCorner {
-            position.leftUp = currentPoint
-        } else if cornerView == leftBottomCorner {
-            position.leftBottom = currentPoint
-        } else if cornerView == rightUpCorner {
-            position.rigntUp = currentPoint
-        } else if cornerView == rightBottomCorner {
-            position.rightBottom = currentPoint
-        }
-
         // draw according to clockwise
-        regionPath.move(to: position.leftUp)
-        regionPath.addLine(to: position.rigntUp)
-        regionPath.addLine(to: position.rightBottom)
-        regionPath.addLine(to: position.leftBottom)
+        regionPath.move(to: observationRect.topLeft)
+        regionPath.addLine(to: observationRect.topRight)
+        regionPath.addLine(to: observationRect.bottomRight)
+        regionPath.addLine(to: observationRect.bottomLeft)
 
         regionPath.close()
 
@@ -182,18 +167,7 @@ class CroppView: UIView {
     @IBAction func saveImage(_ sender: UIBarButtonItem) {
         self.removeFromSuperview()
 
-        // calculate the crop region with the very near corners from path
-        let origin = CGPoint(
-            x: max(position.leftUp.x, position.leftBottom.x),
-            y: max(position.leftUp.y, position.rigntUp.y))
-
-        let size = CGSize(
-            width: min(position.rigntUp.x, position.rightBottom.x) - origin.x,
-            height: min(position.leftBottom.y, position.rightBottom.y) - origin.y)
-
-        let regionRect = CGRect(origin: origin, size: size)
-
-        onRegionSave?(regionRect)
+        onRegionSave?(observationRect)
     }
 }
 

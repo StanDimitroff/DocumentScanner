@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +14,6 @@
             <connections>
                 <outlet property="cameraView" destination="Waz-X1-bOv" id="FE5-Ds-ASJ"/>
                 <outlet property="cancelButton" destination="zmY-aH-4QR" id="4fA-qS-2uU"/>
-                <outlet property="trackView" destination="gFB-wQ-WhS" id="532-sh-fcf"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -29,7 +29,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmY-aH-4QR">
-                            <rect key="frame" x="302" y="5.5" width="53" height="33"/>
+                            <rect key="frame" x="20" y="5.5" width="53" height="33"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <state key="normal" title="Cancel">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -41,15 +41,10 @@
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstItem="zmY-aH-4QR" firstAttribute="leading" secondItem="a65-hC-UtZ" secondAttribute="leading" constant="20" id="EVe-SW-vqM"/>
                         <constraint firstAttribute="height" constant="44" id="G78-b3-24H"/>
-                        <constraint firstAttribute="trailing" secondItem="zmY-aH-4QR" secondAttribute="trailing" constant="20" id="LaP-fs-nCZ"/>
                         <constraint firstItem="zmY-aH-4QR" firstAttribute="centerY" secondItem="a65-hC-UtZ" secondAttribute="centerY" id="WGG-Pi-M57"/>
                     </constraints>
-                </view>
-                <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gFB-wQ-WhS">
-                    <rect key="frame" x="146" y="292" width="83" height="83"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.95294117649999999" green="0.61176470589999998" blue="0.070588235289999995" alpha="0.3770066352739726" colorSpace="calibratedRGB"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCV-uA-rx2" userLabel="Capture Button">
                     <rect key="frame" x="154.5" y="591" width="66" height="66"/>
