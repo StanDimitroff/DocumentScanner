@@ -31,49 +31,6 @@ extension UIImage {
         return croppedUIImage
     }
 
-    func imageByApplyingClippingBezierPath(_ path: UIBezierPath) -> UIImage {
-        // Mask image using path
-        let maskedImage = imageByApplyingMaskingBezierPath(path)
-
-        // Crop image to frame of path
-        let croppedImage = UIImage(cgImage: maskedImage.cgImage!.cropping(to: path.bounds)!)
-        return croppedImage
-    }
-
-    func imageByApplyingMaskingBezierPath(_ path: UIBezierPath) -> UIImage {
-        // Define graphic context (canvas) to paint on
-        UIGraphicsBeginImageContext(size)
-        let context = UIGraphicsGetCurrentContext()!
-        context.saveGState()
-
-        // Set the clipping mask
-        path.addClip()
-        draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-
-        let maskedImage = UIGraphicsGetImageFromCurrentImageContext()!
-
-        // Restore previous drawing context
-        context.restoreGState()
-        UIGraphicsEndImageContext()
-
-        return maskedImage
-    }
-
-    func clip(_ path: UIBezierPath) -> UIImage! {
-        let frame = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
-
-        UIGraphicsBeginImageContextWithOptions(self.size, false, 0.0)
-        let context = UIGraphicsGetCurrentContext()
-        context?.saveGState()
-        path.addClip()
-        self.draw(in: frame)
-
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        context?.restoreGState()
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-
     var flattened: UIImage? {
         let ciImage = CIImage(image: self)!
 
@@ -171,18 +128,6 @@ extension UIImage {
         }
 
         return self
-    }
-}
-
-extension UIView {
-    public func createImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(
-            CGSize(width: self.frame.width, height: self.frame.height), true, 1)
-        self.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return image!
     }
 }
 
