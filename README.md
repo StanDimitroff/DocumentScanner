@@ -35,12 +35,12 @@ StanDimitroff, standimitroff@gmail.com
 
 DocumentScanner is available under the MIT license. See the LICENSE file for more info.
 
-## SUPPORT THE FRAMEWORK
+## Support the framework
 Creating and mantaining libraries takes time and as developer you know this better than anyone else.
 
 If you want to contribuite to the development of this project or give to me a thanks please consider to make a small donation using PayPal:
 
-**MAKE A SMALL DONATION** and support the project.
+**MAKE A SMALL DONATION** and support the project :)
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/standimitroff)
 
