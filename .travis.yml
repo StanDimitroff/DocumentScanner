@@ -2,13 +2,21 @@
 # * http://www.objc.io/issue-6/travis-ci.html
 # * https://github.com/supermarin/xcpretty#usage
 
-osx_image: xcode7.3
+osx_image: xcode9.1
 language: objective-c
+xcode_project: DocumentScanner.xcodeproj
+xcode_scheme: DocumentScanner-Example
+xcode_sdk: 
+ - iphonesimulator11.1
+
+script:
+- xcodebuild -project xcode_project -scheme xcode_scheme -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty -c
+
 # cache: cocoapods
 # podfile: Example/Podfile
 # before_install:
 # - gem install cocoapods # Since Travis is not always on latest version
 # - pod install --project-directory=Example
-script:
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/DocumentScanner.xcworkspace -scheme DocumentScanner-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
+#script:
+#- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/#Alerts.xcworkspace -scheme Alerts-Example -sdk iphonesimulator11.1 ONLY_ACTIVE_ARCH=NO | #xcpretty
 - pod lib lint
