@@ -83,7 +83,6 @@ final class ScannerView: UIView {
         updateShapeLayer()
     }
 
-
     @IBAction func captureImage(_ sender: UIButton) {
         onImageCapture?()
     }

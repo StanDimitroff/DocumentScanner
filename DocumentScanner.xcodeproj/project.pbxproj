@@ -7,19 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		447BB9B22063B07F00F2D33E /* DocumentScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 447BB9B02063B07F00F2D33E /* DocumentScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447BB9CA2063B19D00F2D33E /* Classes in Resources */ = {isa = PBXBuildFile; fileRef = 447BB9C92063B19D00F2D33E /* Classes */; };
-		447BB9CC2063B1BD00F2D33E /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 447BB9CB2063B1BD00F2D33E /* Resources */; };
-		447BB9CE2063B1C800F2D33E /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 447BB9CD2063B1C800F2D33E /* Assets */; };
+		449AFFD32118742F001E856E /* CroppView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 449AFFD12118742F001E856E /* CroppView.xib */; };
+		449AFFD42118742F001E856E /* ScannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 449AFFD22118742F001E856E /* ScannerView.xib */; };
+		449AFFD721187439001E856E /* snap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 449AFFD621187439001E856E /* snap@2x.png */; };
+		44AA235C21185A6C009D639A /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA235421185A6B009D639A /* CornerView.swift */; };
+		44AA235D21185A6C009D639A /* ObservationRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA235521185A6B009D639A /* ObservationRectangle.swift */; };
+		44AA235E21185A6C009D639A /* CroppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA235621185A6B009D639A /* CroppView.swift */; };
+		44AA235F21185A6C009D639A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA235721185A6B009D639A /* Camera.swift */; };
+		44AA236021185A6C009D639A /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA235821185A6C009D639A /* ScannerView.swift */; };
+		44AA236121185A6C009D639A /* UIImage+Crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA235921185A6C009D639A /* UIImage+Crop.swift */; };
+		44AA236221185A6C009D639A /* DocScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA235A21185A6C009D639A /* DocScanner.swift */; };
+		44AA236321185A6C009D639A /* RectangleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA235B21185A6C009D639A /* RectangleDetector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		447BB9AD2063B07F00F2D33E /* DocumentScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DocumentScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		447BB9B02063B07F00F2D33E /* DocumentScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocumentScanner.h; sourceTree = "<group>"; };
 		447BB9B12063B07F00F2D33E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		447BB9C92063B19D00F2D33E /* Classes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Classes; sourceTree = "<group>"; };
-		447BB9CB2063B1BD00F2D33E /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
-		447BB9CD2063B1C800F2D33E /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
+		449AFFD12118742F001E856E /* CroppView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CroppView.xib; sourceTree = "<group>"; };
+		449AFFD22118742F001E856E /* ScannerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScannerView.xib; sourceTree = "<group>"; };
+		449AFFD621187439001E856E /* snap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "snap@2x.png"; sourceTree = "<group>"; };
+		44AA235421185A6B009D639A /* CornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerView.swift; sourceTree = "<group>"; };
+		44AA235521185A6B009D639A /* ObservationRectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationRectangle.swift; sourceTree = "<group>"; };
+		44AA235621185A6B009D639A /* CroppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CroppView.swift; sourceTree = "<group>"; };
+		44AA235721185A6B009D639A /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		44AA235821185A6C009D639A /* ScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		44AA235921185A6C009D639A /* UIImage+Crop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Crop.swift"; sourceTree = "<group>"; };
+		44AA235A21185A6C009D639A /* DocScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocScanner.swift; sourceTree = "<group>"; };
+		44AA235B21185A6C009D639A /* RectangleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectangleDetector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +47,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44251D562118596B007FF6CC /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				44AA235721185A6B009D639A /* Camera.swift */,
+				44AA235421185A6B009D639A /* CornerView.swift */,
+				44AA235621185A6B009D639A /* CroppView.swift */,
+				44AA235A21185A6C009D639A /* DocScanner.swift */,
+				44AA235521185A6B009D639A /* ObservationRectangle.swift */,
+				44AA235B21185A6C009D639A /* RectangleDetector.swift */,
+				44AA235821185A6C009D639A /* ScannerView.swift */,
+				44AA235921185A6C009D639A /* UIImage+Crop.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		447BB9A32063B07F00F2D33E = {
 			isa = PBXGroup;
 			children = (
@@ -52,13 +81,29 @@
 		447BB9AF2063B07F00F2D33E /* DocumentScanner */ = {
 			isa = PBXGroup;
 			children = (
-				447BB9C92063B19D00F2D33E /* Classes */,
-				447BB9CB2063B1BD00F2D33E /* Resources */,
-				447BB9CD2063B1C800F2D33E /* Assets */,
-				447BB9B02063B07F00F2D33E /* DocumentScanner.h */,
+				449AFFD521187439001E856E /* Assets */,
+				449AFFD02118742F001E856E /* Resources */,
+				44251D562118596B007FF6CC /* Source */,
 				447BB9B12063B07F00F2D33E /* Info.plist */,
 			);
 			path = DocumentScanner;
+			sourceTree = "<group>";
+		};
+		449AFFD02118742F001E856E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				449AFFD12118742F001E856E /* CroppView.xib */,
+				449AFFD22118742F001E856E /* ScannerView.xib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		449AFFD521187439001E856E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				449AFFD621187439001E856E /* snap@2x.png */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -68,7 +113,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				447BB9B22063B07F00F2D33E /* DocumentScanner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,12 +143,12 @@
 		447BB9A42063B07F00F2D33E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Stanislav Dimitrov";
 				TargetAttributes = {
 					447BB9AC2063B07F00F2D33E = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -131,9 +175,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				447BB9CC2063B1BD00F2D33E /* Resources in Resources */,
-				447BB9CE2063B1C800F2D33E /* Assets in Resources */,
-				447BB9CA2063B19D00F2D33E /* Classes in Resources */,
+				449AFFD721187439001E856E /* snap@2x.png in Resources */,
+				449AFFD32118742F001E856E /* CroppView.xib in Resources */,
+				449AFFD42118742F001E856E /* ScannerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +188,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44AA235D21185A6C009D639A /* ObservationRectangle.swift in Sources */,
+				44AA235F21185A6C009D639A /* Camera.swift in Sources */,
+				44AA235E21185A6C009D639A /* CroppView.swift in Sources */,
+				44AA236321185A6C009D639A /* RectangleDetector.swift in Sources */,
+				44AA236221185A6C009D639A /* DocScanner.swift in Sources */,
+				44AA236121185A6C009D639A /* UIImage+Crop.swift in Sources */,
+				44AA236021185A6C009D639A /* ScannerView.swift in Sources */,
+				44AA235C21185A6C009D639A /* CornerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +216,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -171,6 +224,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -199,12 +253,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -224,6 +281,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -231,6 +289,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -253,11 +312,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

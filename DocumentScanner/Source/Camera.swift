@@ -5,7 +5,7 @@
 //  Created by Stanislav Dimitrov on 20.11.17.
 //
 
-import Foundation
+import UIKit
 import AVFoundation
 
 @available (iOS 11.0, *)
@@ -110,6 +110,7 @@ final class Camera: NSObject {
         let settings = AVCapturePhotoSettings()
         settings.flashMode = .auto
         settings.isAutoStillImageStabilizationEnabled = true
+
         let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
         let previewFormat = [
             kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
@@ -134,7 +135,7 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
         // make sure the pixel buffer can be converted
         guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
-        rectDetector.detect(on: pixelBuffer)
+        rectDetector.detect(from: pixelBuffer)
     }
 }
 

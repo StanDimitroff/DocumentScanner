@@ -8,16 +8,15 @@
 import UIKit
 
 @available (iOS 11.0, *)
-public final class DocScanner {
+public final class DocScanner: NSObject {
+    public typealias ImageExport = (UIImage) -> Void
+    public typealias Dismiss = () -> Void
 
     private var presenter: UIViewController
-    private var camera = Camera()
+    private let camera = Camera()
 
-    /// Exports scanned image
-    public var onImageExport: ((UIImage) -> Void)?
-
-    /// Dismiss scanner handler
-    public var onDismiss: (() -> Void)?
+    private var exportImage: ImageExport?
+    private var dismiss: Dismiss?
 
     /// Construct scanner object
     public init(presenter: UIViewController) {
@@ -25,7 +24,8 @@ public final class DocScanner {
     }
 
     /// Start scanning
-    public func startSession() {
+    @discardableResult
+    public func startSession() -> Self {
         assert(!camera.captureSession.isRunning, "Scanner is already running")
         
         camera.prepareForSession {
@@ -35,7 +35,7 @@ public final class DocScanner {
             scannerView.frame = presenter.view.frame
 
             scannerView.onDismiss = {
-                self.onDismiss?()
+                self.dismiss?()
                 self.stopSession()
             }
             
@@ -46,6 +46,8 @@ public final class DocScanner {
         observeCameraOutput()
 
         toggleIdle(disabled: true)
+
+        return self
     }
 
     /// Restore stopped scanner session
@@ -69,7 +71,7 @@ public final class DocScanner {
             photo in
 
             if let flattened = photo.flattened(rect: self.camera.observationRect) {
-                self.onImageExport?(flattened.noiseReducted)
+                self.exportImage?(flattened.noiseReducted)
                 self.stopSession()
 
                 return
@@ -89,7 +91,7 @@ public final class DocScanner {
                 region in
 
                 if let flattened = photo.flattened(rect: region) {
-                    self.onImageExport?(flattened.noiseReducted)
+                    self.exportImage?(flattened.noiseReducted)
                     self.stopSession()
 
                     return
@@ -121,13 +123,30 @@ public final class DocScanner {
 
         let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: regionRect)
 
-        onImageExport?(croppedImage.noiseReducted)
+        exportImage?(croppedImage.noiseReducted)
         stopSession()
     }
 
     private func toggleIdle(disabled: Bool) {
          UIApplication.shared.isIdleTimerDisabled = disabled
     }
+
+    /// Exports scanned image
+    ///
+    /// - Parameter closure: A closure with exported image
+    /// - Returns: DocScanner
+    @discardableResult
+    public func exportImage(_ closure: @escaping ImageExport) -> Self {
+        exportImage = closure
+        return self
+    }
+
+    /// Dismisses scanner
+    ///
+    /// - Parameter closure: dismiss closure
+    /// - Returns: DocScanner
+    public func dismiss(_ closure: @escaping Dismiss) -> Self {
+        dismiss = closure
+        return self
+    }
 }
-
-

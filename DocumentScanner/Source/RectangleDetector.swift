@@ -14,7 +14,7 @@ final class RectangleDetector {
     var onRectDetect: ((ObservationRectangle, CGRect) -> Void)?
     private let visionSequenceHandler = VNSequenceRequestHandler()
 
-    func detect(on pixelBuffer: CVPixelBuffer) {
+    func detect(from pixelBuffer: CVPixelBuffer) {
         let request = VNDetectRectanglesRequest(completionHandler: handleVisionRequestUpdate)
         request.minimumConfidence   = 0.6
         request.minimumSize         = 0.3
@@ -43,7 +43,7 @@ final class RectangleDetector {
             observationRect.bottomLeft  = newObservation.bottomLeft
 
             if transformedRect.isEmpty { return }
-            
+
             self.onRectDetect?(observationRect, transformedRect)
         }
     }

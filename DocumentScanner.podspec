@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DocumentScanner'
-  s.version          = '1.0.3'
+  s.version          = '1.0.4'
   s.summary          = 'Simple documents scanner using Vision'
 
   s.description      = <<-DESC
@@ -16,12 +16,12 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'DocumentScanner/Classes/**/*.swift'
+  s.source_files = 'DocumentScanner/Source/*.swift'
 
   s.resource_bundles = {
   'DocumentScanner' => [
-      'DocumentScanner/Resources/**/*.xib',
-      'DocumentScanner/Assets/**/*.png'
+      'DocumentScanner/Resources/*.xib',
+      'DocumentScanner/Assets/*.png'
     ]
   }
 

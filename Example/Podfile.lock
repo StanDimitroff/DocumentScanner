@@ -1,22 +1,16 @@
 PODS:
-  - DocumentScanner (1.0.2)
-  - Nimble (7.0.2)
-  - Quick (1.2.0)
+  - DocumentScanner (1.0.4)
 
 DEPENDENCIES:
   - DocumentScanner (from `../`)
-  - Nimble (~> 7.0.2)
-  - Quick (~> 1.2.0)
 
 EXTERNAL SOURCES:
   DocumentScanner:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  DocumentScanner: 0544b374fa21e570dddb5fb46635c84edc03f5a9
-  Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  DocumentScanner: e4e3badd9fe51a275698df7d2ab365ddfdcfd2ce
 
-PODFILE CHECKSUM: d322804764899df2e0c33cc6e904fe0c985bba2b
+PODFILE CHECKSUM: 17bd2e0c29a1621d1827cccff1cb72b77f989be3
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3
