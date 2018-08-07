@@ -8,7 +8,7 @@
 import UIKit
 
 @available (iOS 11.0, *)
-public final class DocScanner: NSObject {
+@objcMembers public final class DocScanner: NSObject {
     public typealias ImageExport = (UIImage) -> Void
     public typealias Dismiss = () -> Void
 
