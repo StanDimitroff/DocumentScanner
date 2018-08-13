@@ -48,23 +48,27 @@ class CroppView: UIView {
     }
 
     private func setup() {
-        let podBundle = Bundle(for: self.classForCoder)
+        var bundle: Bundle? = nil
 
-        if let bundleURL = podBundle.url(forResource: "DocumentScanner", withExtension: "bundle") {
-            if let bundle = Bundle.init(url: bundleURL) {
+        let libBundle = Bundle(for: self.classForCoder)
 
-                let nib  = UINib(nibName: "CroppView", bundle: bundle)
-                let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
-
-                view.frame = bounds
-
-                addSubview(view)
+        // Search resource in Pod resource bundle
+        if let bundleURL = libBundle.url(forResource: "DocumentScanner", withExtension: "bundle") {
+            if let resourceBundle = Bundle.init(url: bundleURL) {
+                bundle = resourceBundle
             } else {
-                assertionFailure("Could not load the bundle")
+                assertionFailure("Could not load the resource bundle")
             }
         } else {
-            assertionFailure("Could not create a path to the bundle")
+            bundle = libBundle
         }
+
+        let nib  = UINib(nibName: "CroppView", bundle: bundle)
+        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
+
+        view.frame = bounds
+
+        addSubview(view)
 
         retakeButton.title = NSLocalizedString("Retake", comment: "Retake")
         keepButton.title   = NSLocalizedString("Crop", comment: "Crop")

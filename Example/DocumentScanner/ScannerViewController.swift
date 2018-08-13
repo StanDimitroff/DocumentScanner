@@ -35,7 +35,6 @@ class ScannerViewController: UIViewController {
                     self.dismiss(animated: true, completion: nil)
                 }
 
-
             self.previewView.onRescan = {
                 // continue session on current scanner instance
                 scanner.continueSession()
