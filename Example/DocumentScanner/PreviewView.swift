@@ -1,10 +1,3 @@
-//
-//  PreviewView.swift
-//  DocumentScanner_Example
-//
-//  Created by Stanislav Dimitrov on 21.11.17.
-//
-
 import UIKit
 
 final class PreviewView: UIView {

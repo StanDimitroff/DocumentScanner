@@ -1,11 +1,3 @@
-//
-//  ScannerViewController.swift
-//  DocumentScanner_Example
-//
-//  Created by Stanislav Dimitrov on 18.12.17.
-//  Copyright © 2017 CocoaPods. All rights reserved.
-//
-
 import UIKit
 import DocumentScanner
 
@@ -22,6 +14,12 @@ class ScannerViewController: UIViewController {
             self.previewView = PreviewView(frame: self.view.frame)
 
             let scanner = DocScanner(presenter: self)
+                // can be executed muliple times across app logic
+                .config {
+                    $0.minimumConfidence = 0.6
+                    $0.minimumSize = 0.3
+                    $0.quadratureTolerance = 45
+                }
                 .startSession()
                 // this automatically stops scanner session
                 .exportImage { [weak self] image in
@@ -42,5 +40,9 @@ class ScannerViewController: UIViewController {
         } else {
             print("DocumentScanner not available before iOS 11")
         }
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        previewView.frame.size = size
     }
 }

@@ -10,12 +10,13 @@ import AVFoundation
 
 @available (iOS 11.0, *)
 final class Camera: NSObject {
-    
-    private let rectDetector       = RectangleDetector()
+
     private let capturePhotoOutput = AVCapturePhotoOutput()
 
     private var scannerView        = ScannerView()
     private(set) var observationRect = ObservationRectangle()
+
+    private (set) var rectDetector       = RectangleDetector()
 
     var onPhotoCapture: ((UIImage) -> Void)?
 
@@ -42,6 +43,14 @@ final class Camera: NSObject {
         return layer
     }()
 
+    init(detector: RectangleDetector) {
+        super.init()
+
+        self.rectDetector = detector
+
+        Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange(_:)))
+    }
+
     func prepareForSession(prepared: (AVCaptureVideoPreviewLayer, ScannerView) -> ()) {
         scannerView.cameraView.layer.addSublayer(cameraLayer)
 
@@ -49,9 +58,10 @@ final class Camera: NSObject {
     }
 
     func configureAndStartSessiion() {
+
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.alwaysDiscardsLateVideoFrames = true
-        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "MyQueue"))
+        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "DocScannerQueue"))
         captureSession.addOutput(videoOutput)
 
         captureSession.beginConfiguration()
@@ -61,6 +71,10 @@ final class Camera: NSObject {
         }
 
         captureSession.commitConfiguration()
+
+        // set initial video orientation
+        setConnectionOrientation()
+        //setSessionConnectionOrientation()
 
         startSession()
 
@@ -74,6 +88,32 @@ final class Camera: NSObject {
 
     func stopSession() {
         captureSession.stopRunning()
+    }
+
+    // Update orientation for AVCaptureConnection so that CVImageBuffer pixels
+    // are rotated correctly in captureOutput(_:didOutput:from:)
+    @objc private func deviceOrientationDidChange(_ notification: Notification) {
+        if let superView = scannerView.superview {
+            scannerView.frame.size = superView.frame.size
+            cameraLayer.frame.size = superView.frame.size
+        }
+
+        // Change video orientation to always display video in correct orientation
+        setConnectionOrientation()
+        //setSessionConnectionOrientation()
+    }
+
+    private func setConnectionOrientation() {
+        guard let connection = cameraLayer.connection else { return }
+        connection.videoOrientation = Utils.videoOrientationFromDeviceOrientation(videoOrientation: connection.videoOrientation)
+    }
+
+    private func setSessionConnectionOrientation() {
+        captureSession.outputs.forEach {
+            $0.connections.forEach {
+                $0.videoOrientation = Utils.videoOrientationFromDeviceOrientation(videoOrientation: $0.videoOrientation)
+            }
+        }
     }
 
     private func observeDetectorOutput() {        

@@ -14,15 +14,34 @@ final class RectangleDetector {
     var onRectDetect: ((ObservationRectangle, CGRect) -> Void)?
     private let visionSequenceHandler = VNSequenceRequestHandler()
 
+    var minimumConfidence: Float = 0.0
+    var minimumSize: Float = 0.2
+    var quadratureTolerance: Float = 30
+    var minimumAspectRatio: Float = 0.5
+    var maximumAspectRatio: Float = 1
+
+    @discardableResult
+    func config(_ block: (RectangleDetector) throws -> Void) rethrows -> Self {
+        try block(self)
+        
+        return self
+    }
+
     func detect(from pixelBuffer: CVPixelBuffer) {
         let request = VNDetectRectanglesRequest(completionHandler: handleVisionRequestUpdate)
-        request.minimumConfidence   = 0.6
-        request.minimumSize         = 0.3
-        request.quadratureTolerance = 45
+        
+        request.minimumConfidence   = minimumConfidence
+        request.minimumSize         = minimumSize
+        request.quadratureTolerance = quadratureTolerance
+        request.minimumAspectRatio  = minimumAspectRatio
+        request.maximumAspectRatio  = maximumAspectRatio
+
         request.preferBackgroundProcessing = true
 
+        let exifOrientation = Utils.exifOrientationFromDeviceOrientation()
+
         do {
-            try visionSequenceHandler.perform([request], on: pixelBuffer)
+            try visionSequenceHandler.perform([request], on: pixelBuffer, orientation: exifOrientation)
         } catch {
             print("Throws: \(error)")
         }

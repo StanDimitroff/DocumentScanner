@@ -13,14 +13,49 @@ import UIKit
     public typealias Dismiss = () -> Void
 
     private var presenter: UIViewController
-    private let camera = Camera()
+    private var camera = Camera(detector: RectangleDetector())
 
     private var exportImage: ImageExport?
     private var dismiss: Dismiss?
 
+    /// Minimum confidence score, range [0.0, 1.0], defaults to 0.6
+    public var minimumConfidence: Float = 0.6
+
+    /// Minimum size of the document to be detected, range [0.0, 1.0], defaults to 0.3
+    public var minimumSize: Float = 0.3
+
+    /// Maximum number of degrees a document corner angle can deviate from 90 degrees, range [0,45], defaults to 45
+    public var quadratureTolerance: Float = 45
+
+    /// Minimum aspect ratio of the rectangle(s) to look for, range [0.0, 1.0], defaults to 0.5
+    public var minimumAspectRatio: Float = 0.5
+
+    /// Maximum aspect ratio of the document to look for, range [0.0, 1.0], defaults to 1.0
+    public var maximumAspectRatio: Float = 1.0
+
     /// Construct scanner object
     public init(presenter: UIViewController) {
         self.presenter = presenter
+    }
+
+    /// Configuring scanner using `VNDetectRectanglesRequest` parameters. If not provided defaults are used.
+    /// Can be called runtime durring the scanner session
+    ///
+    /// - Parameter block: Block of actions to perform (set parameters)
+    /// - Returns: Running DocScanner instance
+    /// - Throws: Error if cannot execute block
+    public func config(_ block: (DocScanner) throws -> Void) rethrows -> Self {
+        try block(self)
+
+        camera.rectDetector.config {
+            $0.minimumConfidence    = minimumConfidence
+            $0.minimumSize          = minimumSize
+            $0.quadratureTolerance  = quadratureTolerance
+            $0.minimumAspectRatio   = minimumAspectRatio
+            $0.maximumAspectRatio   = maximumAspectRatio
+        }
+
+        return self
     }
 
     /// Start scanning
@@ -62,6 +97,7 @@ import UIKit
     public func stopSession() {
         if camera.captureSession.isRunning {
             camera.stopSession()
+            //Utils.unsubscribeFromOrientationNotifications(camera)
             toggleIdle(disabled: false)
         }
     }
@@ -134,7 +170,7 @@ import UIKit
     /// Exports scanned image
     ///
     /// - Parameter closure: A closure with exported image
-    /// - Returns: DocScanner
+    /// - Returns: Running `DocScanner` instance
     @discardableResult
     public func exportImage(_ closure: @escaping ImageExport) -> Self {
         exportImage = closure
@@ -144,7 +180,7 @@ import UIKit
     /// Dismisses scanner
     ///
     /// - Parameter closure: dismiss closure
-    /// - Returns: DocScanner
+    /// - Returns: Running `DocScanner` instance
     public func dismiss(_ closure: @escaping Dismiss) -> Self {
         dismiss = closure
         return self

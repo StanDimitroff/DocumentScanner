@@ -90,16 +90,20 @@ class CroppView: UIView {
         maskLayer.opacity = 0
 
         imageView.layer.addSublayer(maskLayer)
+
+        Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange(_:)))
     }
 
     private func setInitialRegion() {
         if observationRect.isEmpty {
-            let width = imageView.frame.width - 100
+            let width = imageView.frame.size.width
+            let height = imageView.frame.size.height
+            
             observationRect = ObservationRectangle(
-                topLeft: CGPoint(x: imageView.center.x - width / 2, y: imageView.center.y - width / 2),
-                topRight: CGPoint(x: imageView.center.x + width / 2, y: imageView.center.y - width / 2),
-                bottomRight: CGPoint(x: imageView.center.x + width / 2, y: imageView.center.y + width / 2),
-                bottomLeft: CGPoint(x: imageView.center.x - width / 2, y: imageView.center.y + width / 2)
+                topLeft: CGPoint(x: width / 3.0, y: height / 3.0),
+                topRight: CGPoint(x: 2.0 * width / 3.0, y: height / 3.0),
+                bottomRight: CGPoint(x: 2.0 * width / 3.0, y: 2.0 * height / 3.0),
+                bottomLeft: CGPoint(x: width / 3.0, y: 2.0 * height / 3.0)
             )
         }
 
@@ -172,6 +176,16 @@ class CroppView: UIView {
         self.removeFromSuperview()
 
         onRegionSave?(observationRect)
+    }
+
+    @objc private func deviceOrientationDidChange(_ notification: Notification) {
+        if let superView = self.superview {
+            self.frame.size = superView.frame.size
+        }
+    }
+
+    deinit {
+        Utils.unsubscribeFromOrientationNotifications(self)
     }
 }
 
