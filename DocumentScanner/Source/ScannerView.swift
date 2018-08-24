@@ -7,6 +7,9 @@ final class ScannerView: UIView {
     @IBOutlet weak var cancelButton: UIButton!
 
     @IBOutlet weak var captureButton: UIButton!
+
+    @IBOutlet weak var menuViewHeight: NSLayoutConstraint!
+
     private let shapeLayer = CAShapeLayer()
     private var regionPath = UIBezierPath()
 
@@ -60,10 +63,26 @@ final class ScannerView: UIView {
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "Cancel"), for: .normal)
 
         Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange))
+
+        let interface = UIApplication.shared.statusBarOrientation
+
+        if case .portrait = interface {
+            if Utils.isIPhoneX {
+                menuViewHeight.constant = 100
+            }
+        }
     }
 
     @objc private func deviceOrientationDidChange() {
+        let interface = UIApplication.shared.statusBarOrientation
 
+        if interface.isLandscape {
+            menuViewHeight.constant = 44
+        } else {
+            if Utils.isIPhoneX {
+                menuViewHeight.constant = 100
+            }
+        }
     }
 
     func updateShapeLayer() {

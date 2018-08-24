@@ -105,4 +105,8 @@ class Utils {
             return .scaleAspectFit
         }
     }
+
+    static var isIPhoneX: Bool {
+        return UIScreen.main.nativeBounds.height == 2_436
+    }
 }
