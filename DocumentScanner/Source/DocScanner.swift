@@ -105,8 +105,9 @@ import UIKit
         camera.onPhotoCapture = {
             photo in
 
+            // perform perspective correction
             if let flattened = photo.flattened(rect: self.camera.observationRect) {
-                self.exportImage?(flattened.noiseReducted)
+                self.exportImage?(flattened.noiseReducted.rotated)
                 self.stopSession()
 
                 return
@@ -126,8 +127,9 @@ import UIKit
             cropView.onRegionSave = {
                 region in
 
+                // try to correct perspective with the new region
                 if let flattened = photo.flattened(rect: region) {
-                    self.exportImage?(flattened.noiseReducted)
+                    self.exportImage?(flattened.noiseReducted.rotated)
                     self.stopSession()
 
                     return
@@ -159,7 +161,7 @@ import UIKit
 
         let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: regionRect)
 
-        exportImage?(croppedImage.noiseReducted)
+        exportImage?(croppedImage.noiseReducted.rotated)
         stopSession()
     }
 

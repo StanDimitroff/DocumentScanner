@@ -89,8 +89,6 @@ extension UIImage {
         perspectiveCorrection.setValue(ciImage,
                                        forKey: kCIInputImageKey)
 
-        let imageOrientation = Utils.imageOrientationFromInterfaceOrientation()
-
         if
             let output = perspectiveCorrection.outputImage,
             let cgImage = ciContext.createCGImage(output, from: output.extent) {

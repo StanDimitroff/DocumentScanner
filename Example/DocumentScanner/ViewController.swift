@@ -6,6 +6,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+
     @IBAction func scanDocument(_ sender: UIButton) {
         let scannerVC = ScannerViewController()
 

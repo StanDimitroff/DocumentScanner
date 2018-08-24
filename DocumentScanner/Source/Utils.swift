@@ -71,12 +71,15 @@ class Utils {
         switch interfaceOrientation {
         case .portrait:
             return .right
+        case .portraitUpsideDown:
+            return .left
         case .landscapeRight:
             return .up
         case .landscapeLeft:
             return .down
 
-        default: return .right
+        default:
+            return .right
         }
     }
 
@@ -85,7 +88,17 @@ class Utils {
         let imageOrientation = image.imageOrientation
 
         switch (interfaceOrientation, imageOrientation) {
-        case (.portrait, .right),  (.landscapeLeft, .up), (.landscapeRight, .up):
+        case (.portrait, .right),
+             (.portrait, .left),
+
+             (.portraitUpsideDown, .left),
+             (.portraitUpsideDown, .right),
+
+             (.landscapeLeft, .up),
+             (.landscapeLeft, .down),
+
+             (.landscapeRight, .up),
+             (.landscapeRight, .down):
             return .scaleAspectFill
 
         default:
