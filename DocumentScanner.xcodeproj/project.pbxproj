@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		448E07BB21301B7E00CCC147 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448E07B821301B7D00CCC147 /* Utils.swift */; };
+		448E07BC21301B7E00CCC147 /* UIImageView+Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448E07B921301B7D00CCC147 /* UIImageView+Clip.swift */; };
+		448E07BD21301B7E00CCC147 /* CGRect+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448E07BA21301B7D00CCC147 /* CGRect+Center.swift */; };
 		449AFFD32118742F001E856E /* CroppView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 449AFFD12118742F001E856E /* CroppView.xib */; };
 		449AFFD42118742F001E856E /* ScannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 449AFFD22118742F001E856E /* ScannerView.xib */; };
 		449AFFD721187439001E856E /* snap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 449AFFD621187439001E856E /* snap@2x.png */; };
@@ -23,6 +26,9 @@
 /* Begin PBXFileReference section */
 		447BB9AD2063B07F00F2D33E /* DocumentScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DocumentScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		447BB9B12063B07F00F2D33E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		448E07B821301B7D00CCC147 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		448E07B921301B7D00CCC147 /* UIImageView+Clip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Clip.swift"; sourceTree = "<group>"; };
+		448E07BA21301B7D00CCC147 /* CGRect+Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Center.swift"; sourceTree = "<group>"; };
 		449AFFD12118742F001E856E /* CroppView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CroppView.xib; sourceTree = "<group>"; };
 		449AFFD22118742F001E856E /* ScannerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScannerView.xib; sourceTree = "<group>"; };
 		449AFFD621187439001E856E /* snap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "snap@2x.png"; sourceTree = "<group>"; };
@@ -50,6 +56,9 @@
 		44251D562118596B007FF6CC /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				448E07BA21301B7D00CCC147 /* CGRect+Center.swift */,
+				448E07B921301B7D00CCC147 /* UIImageView+Clip.swift */,
+				448E07B821301B7D00CCC147 /* Utils.swift */,
 				44AA235721185A6B009D639A /* Camera.swift */,
 				44AA235421185A6B009D639A /* CornerView.swift */,
 				44AA235621185A6B009D639A /* CroppView.swift */,
@@ -190,10 +199,13 @@
 			files = (
 				44AA235D21185A6C009D639A /* ObservationRectangle.swift in Sources */,
 				44AA235F21185A6C009D639A /* Camera.swift in Sources */,
+				448E07BB21301B7E00CCC147 /* Utils.swift in Sources */,
 				44AA235E21185A6C009D639A /* CroppView.swift in Sources */,
 				44AA236321185A6C009D639A /* RectangleDetector.swift in Sources */,
 				44AA236221185A6C009D639A /* DocScanner.swift in Sources */,
+				448E07BC21301B7E00CCC147 /* UIImageView+Clip.swift in Sources */,
 				44AA236121185A6C009D639A /* UIImage+Crop.swift in Sources */,
+				448E07BD21301B7E00CCC147 /* CGRect+Center.swift in Sources */,
 				44AA236021185A6C009D639A /* ScannerView.swift in Sources */,
 				44AA235C21185A6C009D639A /* CornerView.swift in Sources */,
 			);

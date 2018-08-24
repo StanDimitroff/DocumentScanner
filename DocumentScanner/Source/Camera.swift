@@ -1,33 +1,50 @@
-//
-//  Camera.swift
-//  DocumentScanner
-//
-//  Created by Stanislav Dimitrov on 20.11.17.
-//
-
 import UIKit
 import AVFoundation
+import Vision
 
 @available (iOS 11.0, *)
 final class Camera: NSObject {
 
     private let capturePhotoOutput = AVCapturePhotoOutput()
+    private let videoDataOutputQueue = DispatchQueue(
+        label: "VideoDataOutputQueue",
+        qos: .userInitiated,
+        attributes: [],
+        autoreleaseFrequency: .workItem)
 
     private var scannerView        = ScannerView()
     private(set) var observationRect = ObservationRectangle()
 
-    private (set) var rectDetector       = RectangleDetector()
+    private (set) var rectDetector = RectangleDetector()
+
+    var bufferSize: CGSize = .zero
 
     var onPhotoCapture: ((UIImage) -> Void)?
+
+    lazy var videoDevice: AVCaptureDevice? = {
+        let videoDevice = AVCaptureDevice.DiscoverySession(
+            deviceTypes: [.builtInWideAngleCamera],
+            mediaType: .video,
+            position: .back).devices.first
+
+        do {
+            try videoDevice?.lockForConfiguration()
+            let dimensions = CMVideoFormatDescriptionGetDimensions((videoDevice?.activeFormat.formatDescription)!)
+            bufferSize.width = CGFloat(dimensions.width)
+            bufferSize.height = CGFloat(dimensions.height)
+            videoDevice?.unlockForConfiguration()
+        } catch {
+            print(error)
+        }
+
+        return videoDevice
+    }()
 
     lazy var captureSession: AVCaptureSession = {
         let session = AVCaptureSession()
         session.sessionPreset = .photo
         guard
-            let backCamera = AVCaptureDevice.default(
-                .builtInWideAngleCamera,
-                for: .video,
-                position: .back),
+            let backCamera = videoDevice,
             let input = try? AVCaptureDeviceInput(device: backCamera)
             else { return session }
 
@@ -61,10 +78,12 @@ final class Camera: NSObject {
 
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.alwaysDiscardsLateVideoFrames = true
-        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "DocScannerQueue"))
+        videoOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
         captureSession.addOutput(videoOutput)
 
         captureSession.beginConfiguration()
+
+        capturePhotoOutput.isHighResolutionCaptureEnabled = true
 
         if captureSession.canAddOutput(capturePhotoOutput) {
             captureSession.addOutput(capturePhotoOutput)
@@ -73,8 +92,7 @@ final class Camera: NSObject {
         captureSession.commitConfiguration()
 
         // set initial video orientation
-        setConnectionOrientation()
-        //setSessionConnectionOrientation()
+        updateConnectionOrientation()
 
         startSession()
 
@@ -83,6 +101,7 @@ final class Camera: NSObject {
     }
 
     func startSession() {
+        scannerView.captureButton.isUserInteractionEnabled = true
         captureSession.startRunning()
     }
 
@@ -90,8 +109,6 @@ final class Camera: NSObject {
         captureSession.stopRunning()
     }
 
-    // Update orientation for AVCaptureConnection so that CVImageBuffer pixels
-    // are rotated correctly in captureOutput(_:didOutput:from:)
     @objc private func deviceOrientationDidChange(_ notification: Notification) {
         if let superView = scannerView.superview {
             scannerView.frame.size = superView.frame.size
@@ -99,21 +116,12 @@ final class Camera: NSObject {
         }
 
         // Change video orientation to always display video in correct orientation
-        setConnectionOrientation()
-        //setSessionConnectionOrientation()
+        updateConnectionOrientation()
     }
 
-    private func setConnectionOrientation() {
+    private func updateConnectionOrientation() {
         guard let connection = cameraLayer.connection else { return }
         connection.videoOrientation = Utils.videoOrientationFromDeviceOrientation(videoOrientation: connection.videoOrientation)
-    }
-
-    private func setSessionConnectionOrientation() {
-        captureSession.outputs.forEach {
-            $0.connections.forEach {
-                $0.videoOrientation = Utils.videoOrientationFromDeviceOrientation(videoOrientation: $0.videoOrientation)
-            }
-        }
     }
 
     private func observeDetectorOutput() {        
@@ -124,10 +132,12 @@ final class Camera: NSObject {
 
             self.observationRect = rect
 
-            let topLeft     = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: rect.topLeft)
-            let topRight    = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: rect.topRight)
-            let bottomRight = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: rect.bottomRight)
-            let bottomLeft  = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: rect.bottomLeft)
+            let flippedRect = rect.flipped
+
+            let topLeft     = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: flippedRect.topLeft)
+            let topRight    = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: flippedRect.topRight)
+            let bottomRight = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: flippedRect.bottomRight)
+            let bottomLeft  = self.cameraLayer.layerPointConverted(fromCaptureDevicePoint: flippedRect.bottomLeft)
 
             self.scannerView.observationRect = ObservationRectangle(
                 topLeft: topLeft,
@@ -149,16 +159,17 @@ final class Camera: NSObject {
     private func capturePhoto() {
         let settings = AVCapturePhotoSettings()
         settings.flashMode = .auto
+        settings.isHighResolutionPhotoEnabled = true
         settings.isAutoStillImageStabilizationEnabled = true
 
-        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
-        let previewFormat = [
-            kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
-            kCVPixelBufferWidthKey as String: 160,
-            kCVPixelBufferHeightKey as String: 160
-        ]
-        
-        settings.previewPhotoFormat = previewFormat
+//        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+//        let previewFormat = [
+//            kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+//            kCVPixelBufferWidthKey as String: 160,
+//            kCVPixelBufferHeightKey as String: 160
+//        ]
+//
+//        settings.previewPhotoFormat = previewFormat
 
         capturePhotoOutput.capturePhoto(with: settings, delegate: self)
     }

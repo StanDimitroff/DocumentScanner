@@ -1,10 +1,3 @@
-//
-//  RectangleDetector.swift
-//  DocumentScanner
-//
-//  Created by Stanislav Dimitrov on 20.11.17.
-//
-
 import Foundation
 import Vision
 
@@ -14,22 +7,22 @@ final class RectangleDetector {
     var onRectDetect: ((ObservationRectangle, CGRect) -> Void)?
     private let visionSequenceHandler = VNSequenceRequestHandler()
 
+    // Vision defaults
+    var maximumObservations = 1
     var minimumConfidence: Float = 0.0
     var minimumSize: Float = 0.2
     var quadratureTolerance: Float = 30
     var minimumAspectRatio: Float = 0.5
     var maximumAspectRatio: Float = 1
 
-    @discardableResult
-    func config(_ block: (RectangleDetector) throws -> Void) rethrows -> Self {
+    func config(_ block: (RectangleDetector) throws -> Void) rethrows {
         try block(self)
-        
-        return self
     }
 
     func detect(from pixelBuffer: CVPixelBuffer) {
         let request = VNDetectRectanglesRequest(completionHandler: handleVisionRequestUpdate)
-        
+
+        request.maximumObservations = maximumObservations
         request.minimumConfidence   = minimumConfidence
         request.minimumSize         = minimumSize
         request.quadratureTolerance = quadratureTolerance
@@ -38,12 +31,13 @@ final class RectangleDetector {
 
         request.preferBackgroundProcessing = true
 
+        // pass exif orientation
         let exifOrientation = Utils.exifOrientationFromDeviceOrientation()
 
         do {
             try visionSequenceHandler.perform([request], on: pixelBuffer, orientation: exifOrientation)
         } catch {
-            print("Throws: \(error)")
+            print("Detector error: \(error)")
         }
     }
 

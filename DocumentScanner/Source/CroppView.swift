@@ -1,10 +1,3 @@
-//
-//  CroppView.swift
-//  DocumentScanner
-//
-//  Created by Stanislav Dimitrov on 8.12.17.
-//
-
 import UIKit
 
 class CroppView: UIView {
@@ -25,14 +18,21 @@ class CroppView: UIView {
 
     private var regionPath = UIBezierPath()
 
+    private var imageViewFrame: CGRect {
+        return imageView.contentClippingRect
+    }
+
     var onRetake: (() -> Void)?
     var onRegionSave: ((ObservationRectangle) -> Void)?
 
-    var observationRect: ObservationRectangle = .zero {
+    var image: UIImage? {
         didSet {
-            setInitialRegion()
+            imageView.image = image
+            updateContentMode()
         }
     }
+
+    var observationRect: ObservationRectangle = .zero
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,7 +71,7 @@ class CroppView: UIView {
         addSubview(view)
 
         retakeButton.title = NSLocalizedString("Retake", comment: "Retake")
-        keepButton.title   = NSLocalizedString("Crop", comment: "Crop")
+        keepButton.title   = NSLocalizedString("Keep Scan", comment: "Keep Scan")
 
         [topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner].forEach {
             corner in
@@ -89,29 +89,50 @@ class CroppView: UIView {
         maskLayer.fillColor = UIColor.black.cgColor
         maskLayer.opacity = 0
 
+        updateImageSize(with: self.frame.size)
+        
+        imageView.layer.addSublayer(shapeLayer)
         imageView.layer.addSublayer(maskLayer)
 
-        Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange(_:)))
+        Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange))
     }
 
     private func setInitialRegion() {
-        if observationRect.isEmpty {
-            let width = imageView.frame.size.width
-            let height = imageView.frame.size.height
-            
-            observationRect = ObservationRectangle(
-                topLeft: CGPoint(x: width / 3.0, y: height / 3.0),
-                topRight: CGPoint(x: 2.0 * width / 3.0, y: height / 3.0),
-                bottomRight: CGPoint(x: 2.0 * width / 3.0, y: 2.0 * height / 3.0),
-                bottomLeft: CGPoint(x: width / 3.0, y: 2.0 * height / 3.0)
-            )
-        }
+        let width = imageViewFrame.size.width
+        let height = imageViewFrame.size.height
+
+        observationRect = ObservationRectangle(
+            topLeft: CGPoint(x: imageViewFrame.center.x - width / 3, y: imageViewFrame.center.y - height / 3),
+            topRight: CGPoint(x: imageViewFrame.center.x + width / 3, y: imageViewFrame.center.y - height / 3),
+            bottomRight: CGPoint(x: imageViewFrame.center.x + width / 3, y: imageViewFrame.center.y + height / 3),
+            bottomLeft: CGPoint(x: imageViewFrame.center.x - width / 3, y: imageViewFrame.center.y + height / 3)
+        )
 
         drawPath()
-        setInitialCorners()
+        updateCorners()
     }
 
-    private func setInitialCorners() {
+    private func updateRegionOrientation() {
+        let width = imageViewFrame.size.width
+        let height = imageViewFrame.size.height
+
+        observationRect = ObservationRectangle(
+            topLeft: CGPoint(x: imageViewFrame.center.x - width / 3, y: imageViewFrame.center.y - height / 3),
+            topRight: CGPoint(x: imageViewFrame.center.x + width / 3, y: imageViewFrame.center.y - height / 3),
+            bottomRight: CGPoint(x: imageViewFrame.center.x + width / 3, y: imageViewFrame.center.y + height / 3),
+            bottomLeft: CGPoint(x: imageViewFrame.center.x - width / 3, y: imageViewFrame.center.y + height / 3)
+        )
+
+        drawPath()
+        updateCorners()
+    }
+
+    private func updateContentMode() {
+        guard let image = self.image else { return }
+        imageView.contentMode = Utils.contentModeFromInterfaceOrientation(for: image)
+    }
+
+    private func updateCorners() {
         topLeftCorner.center     = observationRect.topLeft
         topRightCorner.center    = observationRect.topRight
 
@@ -123,9 +144,7 @@ class CroppView: UIView {
         shapeLayer.path        = regionPath.cgPath
         shapeLayer.strokeColor = UIColor.white.cgColor
         shapeLayer.fillColor   = UIColor.clear.cgColor
-        shapeLayer.lineWidth   = 1
-
-        imageView.layer.addSublayer(shapeLayer)
+        shapeLayer.lineWidth   = 1.5
     }
 
     private func updateMaskLayer() {
@@ -138,8 +157,19 @@ class CroppView: UIView {
     }
 
     @objc private func resizeRegion(_ gesture: UIPanGestureRecognizer) {
-        let currentPoint = gesture.location(in: imageView)
-        guard let cornerView   = gesture.view as? CornerView else { return }
+        var currentPoint = gesture.location(in: imageView)
+        guard let cornerView = gesture.view as? CornerView else { return }
+
+        let leftBound   = imageViewFrame.origin.x
+        let rightBound  = imageViewFrame.maxX
+        let topBound    = imageViewFrame.origin.y
+        let bottomBound = imageViewFrame.maxY
+
+        // avoid drawing beyond the bounds
+        if currentPoint.x < leftBound { currentPoint.x = leftBound }
+        if currentPoint.x > rightBound { currentPoint.x = rightBound }
+        if currentPoint.y < topBound { currentPoint.y = topBound }
+        if currentPoint.y > bottomBound { currentPoint.y = bottomBound }
 
         cornerView.center = currentPoint
 
@@ -149,6 +179,9 @@ class CroppView: UIView {
         case .bottomRight: observationRect.bottomRight = currentPoint
         case .bottomLeft: observationRect.bottomLeft   = currentPoint
         }
+
+        drawPath()
+        updateCorners()
     }
 
     private func drawPath() {
@@ -169,19 +202,41 @@ class CroppView: UIView {
     @IBAction func retake(_ sender: UIBarButtonItem) {
         // return to scanner
         self.removeFromSuperview()
+
         onRetake?()
     }
 
     @IBAction func saveImage(_ sender: UIBarButtonItem) {
-        self.removeFromSuperview()
-
+        // save region to crop
         onRegionSave?(observationRect)
+
+        self.removeFromSuperview()
     }
 
-    @objc private func deviceOrientationDidChange(_ notification: Notification) {
+    @objc private func deviceOrientationDidChange() {
         if let superView = self.superview {
-            self.frame.size = superView.frame.size
+            let newSize = superView.frame.size
+            self.frame.size = newSize
+
+            // update imageView contentMode first
+            updateContentMode()
+            updateImageSize(with: newSize)
+
+            updateRegionOrientation()
         }
+    }
+
+    private func updateImageSize(with size: CGSize) {
+        self.imageView.frame.size = CGSize(width: size.width, height: size.height - 44)
+    }
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        setInitialRegion()
+
+        updateShapeLayer()
+        updateMaskLayer()
     }
 
     deinit {

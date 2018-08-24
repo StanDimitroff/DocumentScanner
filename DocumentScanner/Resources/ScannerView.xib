@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="landscape">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -14,22 +14,24 @@
             <connections>
                 <outlet property="cameraView" destination="Waz-X1-bOv" id="FE5-Ds-ASJ"/>
                 <outlet property="cancelButton" destination="zmY-aH-4QR" id="4fA-qS-2uU"/>
+                <outlet property="captureButton" destination="sCV-uA-rx2" id="Fom-gA-46Y"/>
+                <outlet property="menuView" destination="a65-hC-UtZ" id="8cl-MC-4eJ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="redraw" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Waz-X1-bOv">
-                    <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                    <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a65-hC-UtZ" userLabel="Menu View">
-                    <rect key="frame" x="0.0" y="0.0" width="667" height="44"/>
+                    <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmY-aH-4QR">
-                            <rect key="frame" x="20" y="5.5" width="53" height="33"/>
+                            <rect key="frame" x="20" y="5.6666666666666643" width="53" height="33"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <state key="normal" title="Cancel">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,7 +49,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCV-uA-rx2" userLabel="Capture Button">
-                    <rect key="frame" x="591" y="154.5" width="66" height="66"/>
+                    <rect key="frame" x="154.66666666666663" y="702" width="66" height="66"/>
                     <state key="normal" image="snap.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
@@ -59,17 +61,14 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="sCV-uA-rx2" secondAttribute="trailing" constant="10" id="0i8-Bc-pnP"/>
-                <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2zv-wD-Sni"/>
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="88x-r2-t1E"/>
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Heg-68-inU"/>
-                <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Kos-NY-LGQ"/>
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="OMT-e2-cfX"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="top" secondItem="a65-hC-UtZ" secondAttribute="top" constant="44" id="Po3-cW-ywd">
                     <variation key="widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstItem="a65-hC-UtZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="U2r-Bf-mL2"/>
                 <constraint firstItem="sCV-uA-rx2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Zll-TB-lbf"/>
-                <constraint firstItem="a65-hC-UtZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rxP-qz-Vrz"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="sCV-uA-rx2" secondAttribute="bottom" constant="10" id="sE4-1Z-fA7"/>
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="y6d-1n-gas"/>
                 <constraint firstItem="a65-hC-UtZ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="yFt-p4-Sdf"/>
@@ -78,7 +77,6 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="Kos-NY-LGQ"/>
                     <exclude reference="y6d-1n-gas"/>
                     <exclude reference="0i8-Bc-pnP"/>
                     <exclude reference="Po3-cW-ywd"/>
@@ -95,9 +93,6 @@
             </variation>
             <variation key="widthClass=compact">
                 <mask key="constraints">
-                    <exclude reference="rxP-qz-Vrz"/>
-                    <exclude reference="2zv-wD-Sni"/>
-                    <exclude reference="Kos-NY-LGQ"/>
                     <include reference="y6d-1n-gas"/>
                     <include reference="Po3-cW-ywd"/>
                 </mask>

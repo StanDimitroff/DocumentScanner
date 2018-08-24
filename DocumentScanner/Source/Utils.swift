@@ -17,12 +17,13 @@ class Utils {
         let center = NotificationCenter.default
         center.removeObserver(target)
 
-        UIDevice.current.endGeneratingDeviceOrientationNotifications()
+        //UIDevice.current.endGeneratingDeviceOrientationNotifications()
     }
 
     static func videoOrientationFromDeviceOrientation(
         videoOrientation: AVCaptureVideoOrientation) -> AVCaptureVideoOrientation {
         let deviceOrientation = UIDevice.current.orientation
+
         switch deviceOrientation {
         case .unknown:
             return videoOrientation
@@ -49,20 +50,46 @@ class Utils {
 
     static func exifOrientationFromDeviceOrientation() -> CGImagePropertyOrientation {
         let deviceOrientation = UIDevice.current.orientation
-        let exifOrientation: CGImagePropertyOrientation
 
         switch deviceOrientation {
         case .portraitUpsideDown:  // Device oriented vertically, home button on the top
-            exifOrientation = .left
+            return .left
         case .landscapeLeft:       // Device oriented horizontally, home button on the right
-            exifOrientation = .upMirrored
+            return .upMirrored
         case .landscapeRight:      // Device oriented horizontally, home button on the left
-            exifOrientation = .down
+            return .down
         case .portrait:            // Device oriented vertically, home button on the bottom
-            exifOrientation = .up
+            return .up
         default:
-            exifOrientation = .up
+            return .up
         }
-        return exifOrientation
+    }
+
+    static func imageOrientationFromInterfaceOrientation() -> UIImageOrientation {
+        let interfaceOrientation = UIApplication.shared.statusBarOrientation
+
+        switch interfaceOrientation {
+        case .portrait:
+            return .right
+        case .landscapeRight:
+            return .up
+        case .landscapeLeft:
+            return .down
+
+        default: return .right
+        }
+    }
+
+    static func contentModeFromInterfaceOrientation(for image: UIImage) -> UIViewContentMode {
+        let interfaceOrientation = UIApplication.shared.statusBarOrientation
+        let imageOrientation = image.imageOrientation
+
+        switch (interfaceOrientation, imageOrientation) {
+        case (.portrait, .right),  (.landscapeLeft, .up), (.landscapeRight, .up):
+            return .scaleAspectFill
+
+        default:
+            return .scaleAspectFit
+        }
     }
 }

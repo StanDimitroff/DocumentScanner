@@ -7,6 +7,10 @@ class ScannerViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool { return true }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

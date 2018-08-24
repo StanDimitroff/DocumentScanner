@@ -1,10 +1,3 @@
-//
-//  DocScanner.swift
-//  DocumentScanner
-//
-//  Created by Stanislav Dimitrov on 20.11.17.
-//
-
 import UIKit
 
 @available (iOS 11.0, *)
@@ -17,6 +10,9 @@ import UIKit
 
     private var exportImage: ImageExport?
     private var dismiss: Dismiss?
+
+    /// Maximum number of rectangles to be returned, defaults to 1
+    public var maximumObservations: Int = 1
 
     /// Minimum confidence score, range [0.0, 1.0], defaults to 0.6
     public var minimumConfidence: Float = 0.6
@@ -44,10 +40,12 @@ import UIKit
     /// - Parameter block: Block of actions to perform (set parameters)
     /// - Returns: Running DocScanner instance
     /// - Throws: Error if cannot execute block
+    @discardableResult
     public func config(_ block: (DocScanner) throws -> Void) rethrows -> Self {
         try block(self)
 
         camera.rectDetector.config {
+            $0.maximumObservations  = maximumObservations
             $0.minimumConfidence    = minimumConfidence
             $0.minimumSize          = minimumSize
             $0.quadratureTolerance  = quadratureTolerance
@@ -70,6 +68,8 @@ import UIKit
             scannerView.frame = presenter.view.frame
 
             scannerView.onDismiss = {
+                Utils.unsubscribeFromOrientationNotifications(self.camera)
+                
                 self.dismiss?()
                 self.stopSession()
             }
@@ -97,7 +97,6 @@ import UIKit
     public func stopSession() {
         if camera.captureSession.isRunning {
             camera.stopSession()
-            //Utils.unsubscribeFromOrientationNotifications(camera)
             toggleIdle(disabled: false)
         }
     }
@@ -115,7 +114,8 @@ import UIKit
 
             // manual crop
             let cropView = CroppView(frame: self.presenter.view.frame)
-            cropView.imageView.image = photo
+            
+            cropView.image = photo.rotated
             cropView.observationRect = self.camera.observationRect
 
             // return from manual cropping

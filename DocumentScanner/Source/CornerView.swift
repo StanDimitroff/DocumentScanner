@@ -1,10 +1,3 @@
-//
-//  CornerView.swift
-//  DocumentScanner
-//
-//  Created by Stanislav Dimitrov on 13.12.17.
-//
-
 import UIKit
 
 class CornerView: UIView {
@@ -29,6 +22,6 @@ class CornerView: UIView {
     private func setup() {
         layer.cornerRadius = self.bounds.width / 2
         layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 1
+        layer.borderWidth = 1.5
     }
 }

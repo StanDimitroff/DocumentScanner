@@ -1,10 +1,3 @@
-//
-//  UIImage+Crop.swift
-//  DocumentScanner
-//
-//  Created by Stanislav Dimitrov on 21.11.17.
-//
-
 import UIKit
 import AVFoundation
 
@@ -31,40 +24,47 @@ extension UIImage {
         return croppedUIImage
     }
 
-    var flattened: UIImage? {
-        let ciImage = CIImage(image: self)!
+//    var flattened: UIImage? {
+//        let ciImage = CIImage(image: self)!
+//
+//        guard let openGLContext = EAGLContext(api: .openGLES2) else { return nil }
+//        let ciContext =  CIContext(eaglContext: openGLContext)
+//
+//        let detector = CIDetector(ofType: CIDetectorTypeRectangle,
+//                                  context: ciContext,
+//                                  options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
+//
+//        guard let rect = detector.features(in: ciImage).first as? CIRectangleFeature
+//            else { return nil }
+//
+//        let topLeft     = rect.topLeft.scaled(to: ciImage.extent.size)
+//        let topRight    = rect.topRight.scaled(to: ciImage.extent.size)
+//        let bottomLeft  = rect.bottomLeft.scaled(to: ciImage.extent.size)
+//        let bottomRight = rect.bottomRight.scaled(to: ciImage.extent.size)
+//
+//        let perspectiveCorrection = CIFilter(name: "CIPerspectiveCorrection")!
+//        perspectiveCorrection.setValue(CIVector(cgPoint: topLeft),
+//                                       forKey: "inputTopLeft")
+//        perspectiveCorrection.setValue(CIVector(cgPoint: topRight),
+//                                       forKey: "inputTopRight")
+//        perspectiveCorrection.setValue(CIVector(cgPoint: bottomRight),
+//                                       forKey: "inputBottomRight")
+//        perspectiveCorrection.setValue(CIVector(cgPoint : bottomLeft),
+//                                       forKey: "inputBottomLeft")
+//        perspectiveCorrection.setValue(ciImage,
+//                                       forKey: kCIInputImageKey)
+//
+//
+//        if let output = perspectiveCorrection.outputImage,
+//            let cgImage = ciContext.createCGImage(output, from: output.extent) {
+//            
+//            return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
+//        }
+//
+//        return nil
+//    }
 
-        guard let openGLContext = EAGLContext(api: .openGLES2) else { return nil }
-        let ciContext =  CIContext(eaglContext: openGLContext)
-
-        let detector = CIDetector(ofType: CIDetectorTypeRectangle,
-                                  context: ciContext,
-                                  options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
-
-        guard let rect = detector.features(in: ciImage).first as? CIRectangleFeature
-            else { return nil }
-
-        let perspectiveCorrection = CIFilter(name: "CIPerspectiveCorrection")!
-        perspectiveCorrection.setValue(CIVector(cgPoint: rect.topLeft),
-                                       forKey: "inputTopLeft")
-        perspectiveCorrection.setValue(CIVector(cgPoint: rect.topRight),
-                                       forKey: "inputTopRight")
-        perspectiveCorrection.setValue(CIVector(cgPoint: rect.bottomRight),
-                                       forKey: "inputBottomRight")
-        perspectiveCorrection.setValue(CIVector(cgPoint :rect.bottomLeft),
-                                       forKey: "inputBottomLeft")
-        perspectiveCorrection.setValue(ciImage,
-                                       forKey: kCIInputImageKey)
-
-
-        if let output = perspectiveCorrection.outputImage,
-            let cgImage = ciContext.createCGImage(output, from: output.extent) {
-            
-            return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
-        }
-
-        return nil
-    }
+    //CIPerspectiveTransform
 
     func flattened(rect: ObservationRectangle) -> UIImage? {
         let ciImage = CIImage(image: self)!
@@ -88,6 +88,8 @@ extension UIImage {
                                        forKey: "inputBottomLeft")
         perspectiveCorrection.setValue(ciImage,
                                        forKey: kCIInputImageKey)
+
+        let imageOrientation = Utils.imageOrientationFromInterfaceOrientation()
 
         if
             let output = perspectiveCorrection.outputImage,
@@ -129,10 +131,20 @@ extension UIImage {
 
         return self
     }
+
+    var rotated: UIImage {
+        let imageOrientation = Utils.imageOrientationFromInterfaceOrientation()
+
+        return UIImage(cgImage: self.cgImage!, scale: self.scale, orientation: imageOrientation)
+    }
 }
 
 extension CGPoint {
     func scaled(to size: CGSize) -> CGPoint {
         return CGPoint(x: self.x * size.width, y: self.y * size.height)
+    }
+
+    func rescaled(to size: CGSize) -> CGPoint {
+        return CGPoint(x: self.x / size.width, y: self.y / size.height)
     }
 }

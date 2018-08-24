@@ -1,17 +1,12 @@
-//
-//  ScannerView.swift
-//  DocumentScanner
-//
-//  Created by Stanislav Dimitrov on 20.11.17.
-//
-
 import UIKit
 
 final class ScannerView: UIView {
 
     @IBOutlet var cameraView: UIView!
+    @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
 
+    @IBOutlet weak var captureButton: UIButton!
     private let shapeLayer = CAShapeLayer()
     private var regionPath = UIBezierPath()
 
@@ -60,7 +55,15 @@ final class ScannerView: UIView {
 
         addSubview(view)
 
+        self.layer.addSublayer(shapeLayer)
+
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "Cancel"), for: .normal)
+
+        Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange))
+    }
+
+    @objc private func deviceOrientationDidChange() {
+
     }
 
     func updateShapeLayer() {
@@ -69,8 +72,6 @@ final class ScannerView: UIView {
         shapeLayer.fillColor   = UIColor(red: 0.95, green: 0.61, blue: 0.07, alpha: 1.0).cgColor
         shapeLayer.opacity     = 0.38
         shapeLayer.lineWidth   = 1
-
-        self.layer.addSublayer(shapeLayer)
     }
 
     private func resizeRegion() {
@@ -88,6 +89,9 @@ final class ScannerView: UIView {
     }
 
     @IBAction func captureImage(_ sender: UIButton) {
+        // only one image at a time
+        captureButton.isUserInteractionEnabled = false
+        
         onImageCapture?()
     }
 
