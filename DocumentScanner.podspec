@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DocumentScanner'
-  s.version          = '1.0.4'
+  s.version          = '1.0.6'
   s.summary          = 'Simple documents scanner using Vision'
 
   s.description      = <<-DESC
