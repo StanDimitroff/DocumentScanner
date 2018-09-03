@@ -1,6 +1,6 @@
 import UIKit
 
-class CornerView: UIView {
+open class CornerView: UIView {
 
     enum Position {
         case topLeft, topRight, bottomRight, bottomLeft
@@ -15,7 +15,7 @@ class CornerView: UIView {
         setup()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

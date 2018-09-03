@@ -1,6 +1,6 @@
 import UIKit
 
-final class ScannerView: UIView {
+open class ScannerView: UIView {
 
     @IBOutlet var cameraView: UIView!
     @IBOutlet weak var menuView: UIView!
@@ -31,7 +31,7 @@ final class ScannerView: UIView {
         self.init(frame: .zero)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

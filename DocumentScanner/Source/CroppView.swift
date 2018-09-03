@@ -1,6 +1,6 @@
 import UIKit
 
-class CroppView: UIView {
+open class CroppView: UIView {
 
     // MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
@@ -43,7 +43,7 @@ class CroppView: UIView {
         self.init(frame: .zero)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -230,7 +230,7 @@ class CroppView: UIView {
         self.imageView.frame.size = CGSize(width: size.width, height: size.height - 44)
     }
 
-    override func didMoveToSuperview() {
+    override open func didMoveToSuperview() {
         super.didMoveToSuperview()
 
         setInitialRegion()
@@ -246,7 +246,7 @@ class CroppView: UIView {
 
 // MARK: - UIGestureRecognizerDelegate
 extension CroppView: UIGestureRecognizerDelegate {
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }

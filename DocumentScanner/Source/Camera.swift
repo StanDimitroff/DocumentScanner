@@ -3,7 +3,7 @@ import AVFoundation
 import Vision
 
 @available (iOS 11.0, *)
-final class Camera: NSObject {
+open class Camera: NSObject {
 
     private let capturePhotoOutput = AVCapturePhotoOutput()
     private let videoDataOutputQueue = DispatchQueue(
@@ -178,7 +178,7 @@ final class Camera: NSObject {
 // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
 @available(iOS 11.0, *)
 extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(
+    open func captureOutput(
         _ output: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,
         from connection: AVCaptureConnection) {
@@ -193,7 +193,7 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
 // MARK: - AVCapturePhotoCaptureDelegate
 @available(iOS 11.0, *)
 extension Camera: AVCapturePhotoCaptureDelegate {
-    func photoOutput(
+    open func photoOutput(
         _ output: AVCapturePhotoOutput,
         didFinishProcessingPhoto photo: AVCapturePhoto,
         error: Error?) {

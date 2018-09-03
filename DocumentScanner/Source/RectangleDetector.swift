@@ -2,7 +2,7 @@ import Foundation
 import Vision
 
 @available (iOS 11.0, *)
-final class RectangleDetector {
+open class RectangleDetector {
 
     var onRectDetect: ((ObservationRectangle, CGRect) -> Void)?
     private let visionSequenceHandler = VNSequenceRequestHandler()
