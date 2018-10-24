@@ -8,7 +8,7 @@ class Utils {
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
 
         let center = NotificationCenter.default
-        let name =  NSNotification.Name.UIDeviceOrientationDidChange
+        let name =  UIDevice.orientationDidChangeNotification
         let selector = selector
         center.addObserver(target, selector: selector, name: name, object: nil)
     }
@@ -65,7 +65,7 @@ class Utils {
         }
     }
 
-    static func imageOrientationFromInterfaceOrientation() -> UIImageOrientation {
+    static func imageOrientationFromInterfaceOrientation() -> UIImage.Orientation {
         let interfaceOrientation = UIApplication.shared.statusBarOrientation
 
         switch interfaceOrientation {
@@ -83,7 +83,7 @@ class Utils {
         }
     }
 
-    static func contentModeFromInterfaceOrientation(for image: UIImage) -> UIViewContentMode {
+    static func contentModeFromInterfaceOrientation(for image: UIImage) -> UIView.ContentMode {
         let interfaceOrientation = UIApplication.shared.statusBarOrientation
         let imageOrientation = image.imageOrientation
 

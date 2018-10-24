@@ -85,7 +85,7 @@ open class CroppView: UIView {
             addSubview(corner)
         }
 
-        maskLayer.fillRule = kCAFillRuleEvenOdd
+        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
         maskLayer.fillColor = UIColor.black.cgColor
         maskLayer.opacity = 0
 

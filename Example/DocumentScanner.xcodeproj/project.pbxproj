@@ -12,7 +12,6 @@
 		4480FEFA1FD0246F006D99B6 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4480FEF91FD0246E006D99B6 /* PreviewView.swift */; };
 		4480FEFC1FD02641006D99B6 /* PreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4480FEFB1FD0248E006D99B6 /* PreviewView.xib */; };
 		449AFFB821186B8A001E856E /* DocumentScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 449AFFB721186B8A001E856E /* DocumentScanner.framework */; };
-		449AFFCF21186FFD001E856E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 449AFFCE21186FFD001E856E /* Info.plist */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -164,7 +163,7 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = NXZW7962A8;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -195,7 +194,6 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				4480FEFC1FD02641006D99B6 /* PreviewView.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				449AFFCF21186FFD001E856E /* Info.plist in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,8 +391,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getset.DocScanner-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -413,8 +410,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getset.DocScanner-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
