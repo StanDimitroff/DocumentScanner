@@ -7,6 +7,7 @@ open class ScannerView: UIView {
     @IBOutlet weak var cancelButton: UIButton!
 
     @IBOutlet weak var captureButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
 
     @IBOutlet weak var menuViewHeight: NSLayoutConstraint!
 
@@ -21,6 +22,7 @@ open class ScannerView: UIView {
 
     var onImageCapture: (() -> Void)?
     var onDismiss: (() -> Void)?
+    var onSave: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,6 +63,8 @@ open class ScannerView: UIView {
         self.layer.addSublayer(shapeLayer)
 
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "Cancel"), for: .normal)
+        saveButton.setTitle(NSLocalizedString("Save", comment: "Save"), for: .normal)
+        saveButton.layer.cornerRadius = 12
 
         Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange))
 
@@ -107,11 +111,12 @@ open class ScannerView: UIView {
         updateShapeLayer()
     }
 
-    @IBAction func captureImage(_ sender: UIButton) {
-        // only one image at a time
-        captureButton.isUserInteractionEnabled = false
-        
+    @IBAction func captureImage(_ sender: UIButton) {        
         onImageCapture?()
+    }
+
+    @IBAction func save(_ sender: UIButton) {
+        onSave?()
     }
 
     @IBAction func dismiss(_ sender: UIButton) {

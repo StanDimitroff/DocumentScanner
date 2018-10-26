@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,6 +17,7 @@
                 <outlet property="captureButton" destination="sCV-uA-rx2" id="Fom-gA-46Y"/>
                 <outlet property="menuView" destination="a65-hC-UtZ" id="8cl-MC-4eJ"/>
                 <outlet property="menuViewHeight" destination="G78-b3-24H" id="DjR-ar-edt"/>
+                <outlet property="saveButton" destination="kxi-XV-SBM" id="CVY-zQ-8hE"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -75,6 +76,22 @@
                         <action selector="captureImage:" destination="-1" eventType="touchUpInside" id="ZP2-go-HVc"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxi-XV-SBM">
+                    <rect key="frame" x="280" y="718" width="75" height="27"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="27" id="BOY-Wv-Kbd"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="OW0-xf-Chk"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                    <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                    <state key="normal" title="Save">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="save:" destination="-1" eventType="touchUpInside" id="QIW-pB-CLb"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -92,12 +109,14 @@
                 <constraint firstItem="sCV-uA-rx2" firstAttribute="bottom" secondItem="exb-mh-yU6" secondAttribute="bottom" constant="19" id="XI7-Kw-XCb">
                     <variation key="widthClass=compact" constant="-15"/>
                 </constraint>
+                <constraint firstItem="exb-mh-yU6" firstAttribute="trailing" secondItem="kxi-XV-SBM" secondAttribute="trailing" constant="20" id="Yb3-5A-bQw"/>
                 <constraint firstItem="sCV-uA-rx2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Zll-TB-lbf"/>
                 <constraint firstAttribute="bottom" secondItem="sCV-uA-rx2" secondAttribute="bottom" constant="15" id="a6q-an-BdZ"/>
                 <constraint firstItem="exb-mh-yU6" firstAttribute="leading" secondItem="zmY-aH-4QR" secondAttribute="leading" constant="29" id="cyj-Ga-Oqn">
                     <variation key="heightClass=compact" constant="-15"/>
                 </constraint>
                 <constraint firstItem="a65-hC-UtZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="f1h-9G-l5w"/>
+                <constraint firstItem="exb-mh-yU6" firstAttribute="bottom" secondItem="kxi-XV-SBM" secondAttribute="bottom" constant="33" id="gjp-wa-iNp"/>
                 <constraint firstAttribute="trailing" secondItem="a65-hC-UtZ" secondAttribute="trailing" id="hVJ-N7-jOb"/>
                 <constraint firstAttribute="trailing" secondItem="sCV-uA-rx2" secondAttribute="trailing" constant="547.33333333333337" id="ifL-eT-ONS">
                     <variation key="heightClass=compact" constant="15"/>
@@ -115,8 +134,8 @@
                     <exclude reference="y6d-1n-gas"/>
                     <exclude reference="5LB-54-odM"/>
                     <exclude reference="6hS-5v-9dk"/>
-                    <exclude reference="cyj-Ga-Oqn"/>
                     <exclude reference="yU1-Op-dP1"/>
+                    <exclude reference="cyj-Ga-Oqn"/>
                     <exclude reference="3ia-dL-KIZ"/>
                     <exclude reference="XI7-Kw-XCb"/>
                     <exclude reference="ifL-eT-ONS"/>
@@ -126,8 +145,8 @@
             <variation key="heightClass=compact">
                 <mask key="constraints">
                     <exclude reference="hVJ-N7-jOb"/>
-                    <include reference="cyj-Ga-Oqn"/>
                     <exclude reference="yU1-Op-dP1"/>
+                    <include reference="cyj-Ga-Oqn"/>
                     <include reference="3ia-dL-KIZ"/>
                     <exclude reference="Zll-TB-lbf"/>
                     <exclude reference="a6q-an-BdZ"/>

@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name             = 'DocumentScanner'
-  s.version          = '1.0.6'
+  s.version          = '1.0.8'
   s.summary          = 'Simple documents scanner using Vision'
 
   s.description      = <<-DESC
-    DocumentScanner is based on rectangle detection, crops region of interest and exports UIImage
+    DocumentScanner is based on rectangle detection, crops region of interest and exports UIImage(s)
                        DESC
 
   s.homepage         = 'https://github.com/StanDimitroff/DocumentScanner'
@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/standimitroff'
 
   s.ios.deployment_target = '10.0'
+  s.swift_version = '4.2'
 
   s.source_files = 'DocumentScanner/Source/*.swift'
 

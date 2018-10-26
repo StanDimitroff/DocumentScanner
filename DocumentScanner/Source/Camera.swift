@@ -12,7 +12,7 @@ open class Camera: NSObject {
         attributes: [],
         autoreleaseFrequency: .workItem)
 
-    private var scannerView        = ScannerView()
+    private(set) var scannerView        = ScannerView()
     private(set) var observationRect = ObservationRectangle()
 
     private (set) var rectDetector = RectangleDetector()
@@ -101,7 +101,7 @@ open class Camera: NSObject {
     }
 
     func startSession() {
-        scannerView.captureButton.isUserInteractionEnabled = true
+        scannerView.captureButton.isEnabled = true
         captureSession.startRunning()
     }
 

@@ -3,12 +3,19 @@ import UIKit
 @available (iOS 11.0, *)
 @objcMembers open class DocScanner: NSObject {
     public typealias ImageExport = (UIImage) -> Void
+    public typealias ImagesExport = ([UIImage]) -> Void
     public typealias Dismiss = () -> Void
 
     private var presenter: UIViewController
     private var camera = Camera(detector: RectangleDetector())
+    private var scannedImages: [UIImage] = [] {
+        didSet {
+            updateSaveButton()
+        }
+    }
 
     private var exportImage: ImageExport?
+    private var exportImages: ImagesExport?
     private var dismiss: Dismiss?
 
     /// Maximum number of rectangles to be returned, defaults to 1
@@ -28,6 +35,9 @@ import UIKit
 
     /// Maximum aspect ratio of the document to look for, range [0.0, 1.0], defaults to 1.0
     public var maximumAspectRatio: Float = 1.0
+
+    /// If true can scan and export multiple documents at onse, defaults to false
+    public var exportMultiple: Bool = false
 
     /// Construct scanner object
     public init(presenter: UIViewController) {
@@ -73,6 +83,12 @@ import UIKit
                 self.dismiss?()
                 self.stopSession()
             }
+
+            scannerView.onSave = {
+                self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
+                self.scannedImages.removeAll()
+                self.stopSession()
+            }
             
             presenter.view.addSubview(scannerView)
         }
@@ -101,14 +117,24 @@ import UIKit
         }
     }
 
+    private func updateSaveButton() {
+        camera.scannerView.saveButton.isHidden = scannedImages.isEmpty
+        camera.scannerView.captureButton.isEnabled = exportMultiple
+        if scannedImages.count > 1 {
+          camera.scannerView.saveButton.setTitle(
+            String(format: NSLocalizedString("Save (%d)", comment: ""), scannedImages.count),
+            for: .normal
+          )
+      }
+    }
+
     private func observeCameraOutput() {
         camera.onPhotoCapture = {
             photo in
 
             // perform perspective correction
             if let flattened = photo.flattened(rect: self.camera.observationRect) {
-                self.exportImage?(flattened.noiseReducted.rotated)
-                self.stopSession()
+                self.scannedImages.append(flattened.noiseReducted.rotated)
 
                 return
             }
@@ -127,10 +153,11 @@ import UIKit
             cropView.onRegionSave = {
                 region in
 
+                self.continueSession()
+
                 // try to correct perspective with the new region
                 if let flattened = photo.flattened(rect: region) {
-                    self.exportImage?(flattened.noiseReducted.rotated)
-                    self.stopSession()
+                    self.scannedImages.append(flattened.noiseReducted.rotated)
 
                     return
                 }
@@ -160,22 +187,30 @@ import UIKit
         let regionRect = CGRect(origin: origin, size: size)
 
         let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: regionRect)
-
-        exportImage?(croppedImage.noiseReducted.rotated)
-        stopSession()
+        scannedImages.append(croppedImage.noiseReducted.rotated)
     }
 
     private func toggleIdle(disabled: Bool) {
          UIApplication.shared.isIdleTimerDisabled = disabled
     }
 
-    /// Exports scanned image
+  /// Exports scanned image
+  ///
+  /// - Parameter closure: A closure with exported image
+  /// - Returns: Running `DocScanner` instance
+  @discardableResult
+  public func exportImage(_ closure: @escaping ImageExport) -> Self {
+    exportImage = closure
+    return self
+  }
+
+    /// Exports multiple scanned images
     ///
-    /// - Parameter closure: A closure with exported image
+    /// - Parameter closure: A closure with exported images
     /// - Returns: Running `DocScanner` instance
     @discardableResult
-    public func exportImage(_ closure: @escaping ImageExport) -> Self {
-        exportImage = closure
+    public func exportImages(_ closure: @escaping ImagesExport) -> Self {
+        exportImages = closure
         return self
     }
 
