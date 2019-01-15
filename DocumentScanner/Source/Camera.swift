@@ -29,9 +29,9 @@ open class Camera: NSObject {
 
         do {
             try videoDevice?.lockForConfiguration()
-            let dimensions = CMVideoFormatDescriptionGetDimensions((videoDevice?.activeFormat.formatDescription)!)
-            bufferSize.width = CGFloat(dimensions.width)
-            bufferSize.height = CGFloat(dimensions.height)
+           // let dimensions = CMVideoFormatDescriptionGetDimensions((videoDevice?.activeFormat.formatDescription)!)
+            //bufferSize.width = CGFloat(dimensions.width)
+            //bufferSize.height = CGFloat(dimensions.height)
             videoDevice?.unlockForConfiguration()
         } catch {
             print(error)
@@ -102,7 +102,7 @@ open class Camera: NSObject {
 
     func startSession() {
         scannerView.captureButton.isEnabled = true
-        captureSession.startRunning()
+        //captureSession.startRunning()
     }
 
     func stopSession() {

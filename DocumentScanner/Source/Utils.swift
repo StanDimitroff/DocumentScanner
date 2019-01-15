@@ -107,6 +107,10 @@ class Utils {
     }
 
     static var isIPhoneX: Bool {
-        return UIScreen.main.nativeBounds.height == 2_436
+      if UIDevice.current.userInterfaceIdiom == .phone {
+        return UIScreen.main.nativeBounds.height >= 1792 // iPhone XR
+      }
+
+      return false
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -121,6 +121,7 @@
                 <constraint firstAttribute="trailing" secondItem="sCV-uA-rx2" secondAttribute="trailing" constant="547.33333333333337" id="ifL-eT-ONS">
                     <variation key="heightClass=compact" constant="15"/>
                 </constraint>
+                <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="exb-mh-yU6" secondAttribute="top" id="l9t-ha-8Ka"/>
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="y6d-1n-gas"/>
                 <constraint firstItem="a65-hC-UtZ" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="yFt-p4-Sdf"/>
                 <constraint firstAttribute="leading" secondItem="zmY-aH-4QR" secondAttribute="leading" constant="24" id="yU1-Op-dP1">
@@ -131,11 +132,12 @@
             <viewLayoutGuide key="safeArea" id="exb-mh-yU6"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="l9t-ha-8Ka"/>
                     <exclude reference="y6d-1n-gas"/>
                     <exclude reference="5LB-54-odM"/>
                     <exclude reference="6hS-5v-9dk"/>
-                    <exclude reference="yU1-Op-dP1"/>
                     <exclude reference="cyj-Ga-Oqn"/>
+                    <exclude reference="yU1-Op-dP1"/>
                     <exclude reference="3ia-dL-KIZ"/>
                     <exclude reference="XI7-Kw-XCb"/>
                     <exclude reference="ifL-eT-ONS"/>
@@ -144,9 +146,10 @@
             </variation>
             <variation key="heightClass=compact">
                 <mask key="constraints">
+                    <include reference="l9t-ha-8Ka"/>
                     <exclude reference="hVJ-N7-jOb"/>
-                    <exclude reference="yU1-Op-dP1"/>
                     <include reference="cyj-Ga-Oqn"/>
+                    <exclude reference="yU1-Op-dP1"/>
                     <include reference="3ia-dL-KIZ"/>
                     <exclude reference="Zll-TB-lbf"/>
                     <exclude reference="a6q-an-BdZ"/>
@@ -166,6 +169,7 @@
             </variation>
             <variation key="heightClass=compact-widthClass=compact">
                 <mask key="constraints">
+                    <exclude reference="y6d-1n-gas"/>
                     <exclude reference="XI7-Kw-XCb"/>
                 </mask>
             </variation>
