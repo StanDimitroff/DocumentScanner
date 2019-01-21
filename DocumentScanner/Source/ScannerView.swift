@@ -38,7 +38,7 @@ open class ScannerView: UIView {
     }
 
     private func setup() {
-        var bundle: Bundle? = nil
+        var bundle: Bundle?
 
         let libBundle = Bundle(for: self.classForCoder)
 
@@ -54,7 +54,9 @@ open class ScannerView: UIView {
         }
 
         let nib  = UINib(nibName: "ScannerView", bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
+        guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
+          return
+        }
 
         view.frame = bounds
 
@@ -111,7 +113,7 @@ open class ScannerView: UIView {
         updateShapeLayer()
     }
 
-    @IBAction func captureImage(_ sender: UIButton) {        
+    @IBAction func captureImage(_ sender: UIButton) {
         onImageCapture?()
     }
 

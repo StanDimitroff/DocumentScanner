@@ -68,7 +68,7 @@ open class Camera: NSObject {
         Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange(_:)))
     }
 
-    func prepareForSession(prepared: (AVCaptureVideoPreviewLayer, ScannerView) -> ()) {
+    func prepareForSession(prepared: (AVCaptureVideoPreviewLayer, ScannerView) -> Void) {
         scannerView.cameraView.layer.addSublayer(cameraLayer)
 
         prepared(cameraLayer, scannerView)
@@ -121,7 +121,8 @@ open class Camera: NSObject {
 
     private func updateConnectionOrientation() {
         guard let connection = cameraLayer.connection else { return }
-        connection.videoOrientation = Utils.videoOrientationFromDeviceOrientation(videoOrientation: connection.videoOrientation)
+        connection.videoOrientation = Utils.videoOrientationFromDeviceOrientation(
+          videoOrientation: connection.videoOrientation)
     }
 
     private func observeDetectorOutput() {        

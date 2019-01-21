@@ -48,7 +48,7 @@ open class CroppView: UIView {
     }
 
     private func setup() {
-        var bundle: Bundle? = nil
+        var bundle: Bundle?
 
         let libBundle = Bundle(for: self.classForCoder)
 
@@ -64,7 +64,9 @@ open class CroppView: UIView {
         }
 
         let nib  = UINib(nibName: "CroppView", bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
+        guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
+          return
+        }
 
         view.frame = bounds
 
@@ -73,8 +75,7 @@ open class CroppView: UIView {
         retakeButton.title = NSLocalizedString("Retake", comment: "Retake")
         keepButton.title   = NSLocalizedString("Keep Scan", comment: "Keep Scan")
 
-        [topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner].forEach {
-            corner in
+        [topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner].forEach { corner in
 
             let dragGesture = UIPanGestureRecognizer()
             dragGesture.addTarget(self, action: #selector(resizeRegion(_:)))
@@ -90,7 +91,7 @@ open class CroppView: UIView {
         maskLayer.opacity = 0
 
         updateImageSize(with: self.frame.size)
-        
+
         imageView.layer.addSublayer(shapeLayer)
         imageView.layer.addSublayer(maskLayer)
 

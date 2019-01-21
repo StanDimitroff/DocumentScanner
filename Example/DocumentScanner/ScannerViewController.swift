@@ -37,7 +37,7 @@ class ScannerViewController: UIViewController {
                     guard let `self` = self else { return }
                     self.previewView.imageView.image = images[0]
                     self.view.addSubview(self.previewView)
-                  
+
                     print("Exported images: \(images.count)")
                 }
                 .dismiss { [weak self] in

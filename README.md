@@ -11,8 +11,8 @@
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
-* iOS 10.0+
-* Swift 4+
+*  iOS 10.0+
+*  Swift 4+
 
 ## Installation
 
@@ -20,7 +20,7 @@ DocumentScanner is available through [CocoaPods](http://cocoapods.org). To insta
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'DocumentScanner'
+ pod 'DocumentScanner'
 ```
 
 Install via [Carthage](https://github.com/Carthage/Carthage). Add this line to your Cartfile:
@@ -41,7 +41,4 @@ Creating and mantaining libraries takes time and as developer you know this bett
 If you want to contribuite to the development of this project or give to me a thanks please consider to make a small donation using PayPal:
 
 **MAKE A SMALL DONATION** and support the project :)
-
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/standimitroff)
-
-

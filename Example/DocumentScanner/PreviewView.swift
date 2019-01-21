@@ -23,7 +23,9 @@ final class PreviewView: UIView {
 
         let bundle = Bundle(for: type(of: self))
         let nib    = UINib(nibName: "PreviewView", bundle: bundle)
-        let view   = nib.instantiate(withOwner: self, options: nil).first as! UIView
+        guard let view   = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
+          return
+        }
 
         view.frame = bounds
 

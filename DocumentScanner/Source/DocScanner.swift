@@ -71,8 +71,7 @@ import UIKit
     public func startSession() -> Self {
         assert(!camera.captureSession.isRunning, "Scanner is already running")
         
-        camera.prepareForSession {
-            cameraLayer, scannerView in
+        camera.prepareForSession { cameraLayer, scannerView in
 
             cameraLayer.frame = presenter.view.bounds
             scannerView.frame = presenter.view.frame
@@ -141,7 +140,7 @@ import UIKit
 
             // manual crop
             let cropView = CroppView(frame: self.presenter.view.frame)
-            
+
             cropView.image = photo.rotated
             cropView.observationRect = self.camera.observationRect
 

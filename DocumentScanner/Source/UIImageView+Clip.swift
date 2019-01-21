@@ -16,9 +16,9 @@ extension UIImageView {
         }
 
         let size = CGSize(width: imageSize.width * scale, height: imageSize.height * scale)
-        let x = (bounds.width - size.width) / 2.0
-        let y = (bounds.height - size.height) / 2.0
+        let xCoord = (bounds.width - size.width) / 2.0
+        let yCoord = (bounds.height - size.height) / 2.0
 
-        return CGRect(x: x, y: y, width: size.width, height: size.height)
+        return CGRect(x: xCoord, y: yCoord, width: size.width, height: size.height)
     }
 }

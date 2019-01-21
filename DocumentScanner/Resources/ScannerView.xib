@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
+    <device id="ipad11_0rounded" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -22,18 +22,18 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="redraw" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Waz-X1-bOv">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a65-hC-UtZ" userLabel="Menu View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="834" height="44"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmY-aH-4QR">
-                            <rect key="frame" x="15" y="5.6666666666666679" width="53" height="33"/>
+                            <rect key="frame" x="15" y="5.5" width="53" height="33"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <state key="normal" title="Cancel">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -68,7 +68,7 @@
                     </variation>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCV-uA-rx2" userLabel="Capture Button">
-                    <rect key="frame" x="154.66666666666666" y="697" width="66" height="66"/>
+                    <rect key="frame" x="384" y="1093" width="66" height="66"/>
                     <state key="normal" image="snap.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
@@ -77,7 +77,7 @@
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxi-XV-SBM">
-                    <rect key="frame" x="280" y="718" width="75" height="27"/>
+                    <rect key="frame" x="739" y="1114" width="75" height="27"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="BOY-Wv-Kbd"/>
@@ -99,6 +99,7 @@
                     <variation key="heightClass=compact" constant="-15"/>
                 </constraint>
                 <constraint firstItem="a65-hC-UtZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5LB-54-odM"/>
+                <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6Zb-W6-qlO"/>
                 <constraint firstItem="a65-hC-UtZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="6hS-5v-9dk">
                     <variation key="widthClass=compact" constant="0.0"/>
                 </constraint>
@@ -106,6 +107,7 @@
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Heg-68-inU"/>
                 <constraint firstItem="Waz-X1-bOv" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="OMT-e2-cfX"/>
                 <constraint firstItem="a65-hC-UtZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="U2r-Bf-mL2"/>
+                <constraint firstItem="exb-mh-yU6" firstAttribute="bottom" secondItem="sCV-uA-rx2" secondAttribute="bottom" constant="15" id="WHS-Q5-HZb"/>
                 <constraint firstItem="sCV-uA-rx2" firstAttribute="bottom" secondItem="exb-mh-yU6" secondAttribute="bottom" constant="19" id="XI7-Kw-XCb">
                     <variation key="widthClass=compact" constant="-15"/>
                 </constraint>
@@ -132,10 +134,12 @@
             <viewLayoutGuide key="safeArea" id="exb-mh-yU6"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="6Zb-W6-qlO"/>
                     <exclude reference="l9t-ha-8Ka"/>
                     <exclude reference="y6d-1n-gas"/>
                     <exclude reference="5LB-54-odM"/>
                     <exclude reference="6hS-5v-9dk"/>
+                    <exclude reference="WHS-Q5-HZb"/>
                     <exclude reference="cyj-Ga-Oqn"/>
                     <exclude reference="yU1-Op-dP1"/>
                     <exclude reference="3ia-dL-KIZ"/>
@@ -157,6 +161,12 @@
                     <include reference="zdS-eq-oeB"/>
                 </mask>
             </variation>
+            <variation key="heightClass=regular">
+                <mask key="constraints">
+                    <include reference="WHS-Q5-HZb"/>
+                    <exclude reference="a6q-an-BdZ"/>
+                </mask>
+            </variation>
             <variation key="widthClass=compact">
                 <mask key="constraints">
                     <include reference="y6d-1n-gas"/>
@@ -171,6 +181,16 @@
                 <mask key="constraints">
                     <exclude reference="y6d-1n-gas"/>
                     <exclude reference="XI7-Kw-XCb"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="constraints">
+                    <exclude reference="XI7-Kw-XCb"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=regular">
+                <mask key="constraints">
+                    <include reference="6Zb-W6-qlO"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="33.5" y="53"/>

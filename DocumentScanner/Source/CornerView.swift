@@ -10,7 +10,7 @@ open class CornerView: UIView {
 
     init(position: Position) {
         self.position = position
-        
+
         super.init(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
         setup()
     }
