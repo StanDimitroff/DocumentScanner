@@ -2,12 +2,12 @@
 # * http://www.objc.io/issue-6/travis-ci.html
 # * https://github.com/supermarin/xcpretty#usage
 
-osx_image: xcode10
+osx_image: xcode10.2
 language: objective-c
 xcode_project: DocumentScanner.xcodeproj
 xcode_scheme: DocumentScanner-Example
 xcode_sdk: 
- - iphonesimulator12.0
+ - iphonesimulator12.2
 
 script:
 - xcodebuild -project xcode_project -scheme xcode_scheme -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty -c
