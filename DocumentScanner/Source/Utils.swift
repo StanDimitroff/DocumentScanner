@@ -45,7 +45,9 @@ class Utils {
         case .faceDown:
             // Device oriented flat, face down
             return videoOrientation
-        }
+				@unknown default:
+						fatalError()
+			}
     }
 
     static func exifOrientationFromDeviceOrientation() -> CGImagePropertyOrientation {

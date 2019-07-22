@@ -102,7 +102,7 @@ open class Camera: NSObject {
 
     func startSession() {
         scannerView.captureButton.isEnabled = true
-        //captureSession.startRunning()
+        captureSession.startRunning()
     }
 
     func stopSession() {

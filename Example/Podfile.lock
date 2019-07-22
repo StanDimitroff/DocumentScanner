@@ -1,5 +1,5 @@
 PODS:
-  - DocumentScanner (1.0.6)
+  - DocumentScanner (1.0.8)
 
 DEPENDENCIES:
   - DocumentScanner (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  DocumentScanner: 27e80d79771ec2497e307e56305aca71129936dd
+  DocumentScanner: e99e3164154d38dd4c6c9e471cec08839c83e35e
 
 PODFILE CHECKSUM: 17bd2e0c29a1621d1827cccff1cb72b77f989be3
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.5

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DocumentScanner'
-  s.version          = '1.0.8'
+  s.version          = '1.0.9'
   s.summary          = 'Simple documents scanner using Vision'
 
   s.description      = <<-DESC
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/standimitroff'
 
   s.ios.deployment_target = '10.0'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   s.source_files = 'DocumentScanner/Source/*.swift'
 
