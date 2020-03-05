@@ -2,9 +2,9 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/08219b576b734f0f89a3e4c758024572)](https://app.codacy.com/app/StanDimitroff/DocumentScanner?utm_source=github.com&utm_medium=referral&utm_content=StanDimitroff/DocumentScanner&utm_campaign=Badge_Grade_Dashboard)
 [![CI Status](http://img.shields.io/travis/StanDimitroff/DocumentScanner.svg?style=flat)](https://travis-ci.org/StanDimitroff/DocumentScanner)
-[![Version](https://img.shields.io/cocoapods/v/DocumentScanner.svg?style=flat)](http://cocoapods.org/pods/DocumentScanner)
-[![License](https://img.shields.io/cocoapods/l/DocumentScanner.svg?style=flat)](http://cocoapods.org/pods/DocumentScanner)
-[![Platform](https://img.shields.io/cocoapods/p/DocumentScanner.svg?style=flat)](http://cocoapods.org/pods/DocumentScanner)
+[![Version](https://img.shields.io/cocoapods/v/DocumentScanner.svg?style=flat)](https://cocoapods.org/pods/DocumentScanner)
+[![License](https://img.shields.io/cocoapods/l/DocumentScanner.svg?style=flat)](https://cocoapods.org/pods/DocumentScanner)
+[![Platform](https://img.shields.io/cocoapods/p/DocumentScanner.svg?style=flat)](https://cocoapods.org/pods/DocumentScanner)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 ## Example

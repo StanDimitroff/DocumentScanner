@@ -2,7 +2,6 @@ import UIKit
 import AVFoundation
 import Vision
 
-@available (iOS 11.0, *)
 open class Camera: NSObject {
 
     private let capturePhotoOutput = AVCapturePhotoOutput()
@@ -177,7 +176,6 @@ open class Camera: NSObject {
 }
 
 // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
-@available(iOS 11.0, *)
 extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
     open func captureOutput(
         _ output: AVCaptureOutput,
@@ -192,7 +190,6 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 // MARK: - AVCapturePhotoCaptureDelegate
-@available(iOS 11.0, *)
 extension Camera: AVCapturePhotoCaptureDelegate {
     open func photoOutput(
         _ output: AVCapturePhotoOutput,
