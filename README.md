@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/cocoapods/l/DocumentScanner.svg?style=flat)](https://cocoapods.org/pods/DocumentScanner)
 [![Platform](https://img.shields.io/cocoapods/p/DocumentScanner.svg?style=flat)](https://cocoapods.org/pods/DocumentScanner)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![SPM compatible](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://swift.org/package-manager)
 
 ## Example
 

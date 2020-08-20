@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScannerView" customModule="DocumentScanner" customModuleProvider="target">
+            <connections>
+                <outlet property="cameraView" destination="Waz-X1-bOv" id="FE5-Ds-ASJ"/>
+                <outlet property="cancelButton" destination="zmY-aH-4QR" id="4fA-qS-2uU"/>
+                <outlet property="captureButton" destination="sCV-uA-rx2" id="Fom-gA-46Y"/>
+                <outlet property="menuView" destination="a65-hC-UtZ" id="8cl-MC-4eJ"/>
+                <outlet property="menuViewHeight" destination="G78-b3-24H" id="DjR-ar-edt"/>
+                <outlet property="saveButton" destination="kxi-XV-SBM" id="CVY-zQ-8hE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="redraw" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Waz-X1-bOv">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a65-hC-UtZ" userLabel="Menu View">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmY-aH-4QR">
+                            <rect key="frame" x="15" y="5.6666666666666679" width="53" height="33"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="dismiss:" destination="-1" eventType="touchUpInside" id="klW-pl-Rdv"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="zmY-aH-4QR" secondAttribute="bottom" constant="5.5" id="6sq-Jb-B3j"/>
+                        <constraint firstItem="zmY-aH-4QR" firstAttribute="leading" secondItem="a65-hC-UtZ" secondAttribute="leading" constant="15" id="EVe-SW-vqM"/>
+                        <constraint firstAttribute="height" constant="44" id="G78-b3-24H"/>
+                        <constraint firstItem="zmY-aH-4QR" firstAttribute="centerY" secondItem="a65-hC-UtZ" secondAttribute="centerY" id="WGG-Pi-M57"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="6sq-Jb-B3j"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="EVe-SW-vqM"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="6sq-Jb-B3j"/>
+                            <exclude reference="WGG-Pi-M57"/>
+                        </mask>
+                    </variation>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCV-uA-rx2" userLabel="Capture Button">
+                    <rect key="frame" x="174" y="655" width="66" height="66"/>
+                    <state key="normal" image="snap.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="captureImage:" destination="-1" eventType="touchUpInside" id="ZP2-go-HVc"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxi-XV-SBM">
+                    <rect key="frame" x="319" y="676" width="75" height="27"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="27" id="BOY-Wv-Kbd"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="OW0-xf-Chk"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                    <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                    <state key="normal" title="Save">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="save:" destination="-1" eventType="touchUpInside" id="QIW-pB-CLb"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="sCV-uA-rx2" firstAttribute="trailing" secondItem="exb-mh-yU6" secondAttribute="trailing" constant="29" id="3ia-dL-KIZ">
+                    <variation key="heightClass=compact" constant="-15"/>
+                </constraint>
+                <constraint firstItem="a65-hC-UtZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5LB-54-odM"/>
+                <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6Zb-W6-qlO"/>
+                <constraint firstItem="a65-hC-UtZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="6hS-5v-9dk">
+                    <variation key="widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstItem="Waz-X1-bOv" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="88x-r2-t1E"/>
+                <constraint firstItem="Waz-X1-bOv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Heg-68-inU"/>
+                <constraint firstItem="Waz-X1-bOv" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="OMT-e2-cfX"/>
+                <constraint firstItem="a65-hC-UtZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="U2r-Bf-mL2"/>
+                <constraint firstItem="exb-mh-yU6" firstAttribute="bottom" secondItem="sCV-uA-rx2" secondAttribute="bottom" constant="15" id="WHS-Q5-HZb"/>
+                <constraint firstItem="sCV-uA-rx2" firstAttribute="bottom" secondItem="exb-mh-yU6" secondAttribute="bottom" constant="19" id="XI7-Kw-XCb">
+                    <variation key="widthClass=compact" constant="-15"/>
+                </constraint>
+                <constraint firstItem="exb-mh-yU6" firstAttribute="trailing" secondItem="kxi-XV-SBM" secondAttribute="trailing" constant="20" id="Yb3-5A-bQw"/>
+                <constraint firstItem="sCV-uA-rx2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Zll-TB-lbf"/>
+                <constraint firstAttribute="bottom" secondItem="sCV-uA-rx2" secondAttribute="bottom" constant="15" id="a6q-an-BdZ"/>
+                <constraint firstItem="exb-mh-yU6" firstAttribute="leading" secondItem="zmY-aH-4QR" secondAttribute="leading" constant="29" id="cyj-Ga-Oqn">
+                    <variation key="heightClass=compact" constant="-15"/>
+                </constraint>
+                <constraint firstItem="a65-hC-UtZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="f1h-9G-l5w"/>
+                <constraint firstItem="exb-mh-yU6" firstAttribute="bottom" secondItem="kxi-XV-SBM" secondAttribute="bottom" constant="33" id="gjp-wa-iNp"/>
+                <constraint firstAttribute="trailing" secondItem="a65-hC-UtZ" secondAttribute="trailing" id="hVJ-N7-jOb"/>
+                <constraint firstAttribute="trailing" secondItem="sCV-uA-rx2" secondAttribute="trailing" constant="547.33333333333337" id="ifL-eT-ONS">
+                    <variation key="heightClass=compact" constant="15"/>
+                </constraint>
+                <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="exb-mh-yU6" secondAttribute="top" id="l9t-ha-8Ka"/>
+                <constraint firstItem="Waz-X1-bOv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="y6d-1n-gas"/>
+                <constraint firstItem="a65-hC-UtZ" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="yFt-p4-Sdf"/>
+                <constraint firstAttribute="leading" secondItem="zmY-aH-4QR" secondAttribute="leading" constant="24" id="yU1-Op-dP1">
+                    <variation key="heightClass=compact" constant="-15"/>
+                </constraint>
+                <constraint firstItem="sCV-uA-rx2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="zdS-eq-oeB"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="exb-mh-yU6"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="6Zb-W6-qlO"/>
+                    <exclude reference="l9t-ha-8Ka"/>
+                    <exclude reference="y6d-1n-gas"/>
+                    <exclude reference="5LB-54-odM"/>
+                    <exclude reference="6hS-5v-9dk"/>
+                    <exclude reference="WHS-Q5-HZb"/>
+                    <exclude reference="cyj-Ga-Oqn"/>
+                    <exclude reference="yU1-Op-dP1"/>
+                    <exclude reference="3ia-dL-KIZ"/>
+                    <exclude reference="XI7-Kw-XCb"/>
+                    <exclude reference="ifL-eT-ONS"/>
+                    <exclude reference="zdS-eq-oeB"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact">
+                <mask key="constraints">
+                    <include reference="l9t-ha-8Ka"/>
+                    <exclude reference="hVJ-N7-jOb"/>
+                    <include reference="cyj-Ga-Oqn"/>
+                    <exclude reference="yU1-Op-dP1"/>
+                    <include reference="3ia-dL-KIZ"/>
+                    <exclude reference="Zll-TB-lbf"/>
+                    <exclude reference="a6q-an-BdZ"/>
+                    <exclude reference="ifL-eT-ONS"/>
+                    <include reference="zdS-eq-oeB"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular">
+                <mask key="constraints">
+                    <include reference="WHS-Q5-HZb"/>
+                    <exclude reference="a6q-an-BdZ"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="constraints">
+                    <include reference="y6d-1n-gas"/>
+                    <exclude reference="5LB-54-odM"/>
+                    <include reference="6hS-5v-9dk"/>
+                    <exclude reference="f1h-9G-l5w"/>
+                    <include reference="XI7-Kw-XCb"/>
+                    <exclude reference="a6q-an-BdZ"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact-widthClass=compact">
+                <mask key="constraints">
+                    <exclude reference="y6d-1n-gas"/>
+                    <exclude reference="XI7-Kw-XCb"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="constraints">
+                    <exclude reference="XI7-Kw-XCb"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=regular">
+                <mask key="constraints">
+                    <include reference="6Zb-W6-qlO"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="33.5" y="53"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="snap.png" width="66.5" height="66.5"/>
+    </resources>
+</document>
