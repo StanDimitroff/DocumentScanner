@@ -139,9 +139,10 @@ import UIKit
                 self.scannedImages.append(flattened.noiseReducted.rotated)
                 
                 if self.maximumScans != -1
-                    && self.scannedImages.count+1 >= self.maximumScans  {
+                    && self.scannedImages.count >= self.maximumScans  {
+                    self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
+                    self.scannedImages.removeAll()
                     self.stopSession()
-                    self.dismiss?()
                 }
                 
                 return
@@ -169,9 +170,10 @@ import UIKit
                     self.scannedImages.append(flattened.noiseReducted.rotated)
 
                     if self.maximumScans != -1
-                        && self.scannedImages.count+1 >= self.maximumScans  {
+                        && self.scannedImages.count >= self.maximumScans  {
+                        self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
+                        self.scannedImages.removeAll()
                         self.stopSession()
-                        self.dismiss?()
                     }
                     
                     return
@@ -205,9 +207,10 @@ import UIKit
         scannedImages.append(croppedImage.noiseReducted.rotated)
         
         if self.maximumScans != -1
-            && self.scannedImages.count+1 >= self.maximumScans  {
+            && self.scannedImages.count >= self.maximumScans  {
+            self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
+            self.scannedImages.removeAll()
             self.stopSession()
-            self.dismiss?()
         }
     }
 
