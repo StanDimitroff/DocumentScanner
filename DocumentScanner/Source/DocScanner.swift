@@ -143,6 +143,7 @@ import UIKit
                     self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
                     self.scannedImages.removeAll()
                     self.stopSession()
+                    self.dismiss?()
                 }
                 
                 return
@@ -174,6 +175,7 @@ import UIKit
                         self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
                         self.scannedImages.removeAll()
                         self.stopSession()
+                        self.dismiss?()
                     }
                     
                     return
@@ -211,6 +213,7 @@ import UIKit
             self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
             self.scannedImages.removeAll()
             self.stopSession()
+            self.dismiss?()
         }
     }
 
