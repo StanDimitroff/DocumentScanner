@@ -70,25 +70,11 @@ open class ScannerView: UIView {
 
         Utils.subscribeToDeviceOrientationNotifications(self, selector: #selector(deviceOrientationDidChange))
 
-        let interface = UIApplication.shared.statusBarOrientation
-
-        if case .portrait = interface {
-            if Utils.isIPhoneX {
-                menuViewHeight.constant = 100
-            }
-        }
+        menuViewHeight.constant = self.safeAreaInsets.top
     }
 
     @objc private func deviceOrientationDidChange() {
-        let interface = UIApplication.shared.statusBarOrientation
-
-        if interface.isLandscape {
-            menuViewHeight.constant = 44
-        } else {
-            if Utils.isIPhoneX {
-                menuViewHeight.constant = 100
-            }
-        }
+        menuViewHeight.constant = self.safeAreaInsets.top
     }
 
     func updateShapeLayer() {

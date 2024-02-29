@@ -37,6 +37,9 @@ import UIKit
 
     /// If true can scan and export multiple documents at onse, defaults to false
     public var exportMultiple: Bool = false
+    
+    ///Maximum number of scans. -1 for unlimited
+    public var maximumScans = -1
 
     /// Construct scanner object
     public init(presenter: UIViewController) {
@@ -132,8 +135,17 @@ import UIKit
 
             // perform perspective correction
             if let flattened = photo.flattened(rect: self.camera.observationRect) {
+                
                 self.scannedImages.append(flattened.noiseReducted.rotated)
-
+                
+                if self.maximumScans != -1
+                    && self.scannedImages.count >= self.maximumScans  {
+                    self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
+                    self.scannedImages.removeAll()
+                    self.stopSession()
+                    self.dismiss?()
+                }
+                
                 return
             }
 
@@ -146,6 +158,7 @@ import UIKit
             // return from manual cropping
             cropView.onRetake = {
                 self.continueSession()
+                self.stopSession()
             }
 
             cropView.onRegionSave = {
@@ -157,6 +170,14 @@ import UIKit
                 if let flattened = photo.flattened(rect: region) {
                     self.scannedImages.append(flattened.noiseReducted.rotated)
 
+                    if self.maximumScans != -1
+                        && self.scannedImages.count >= self.maximumScans  {
+                        self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
+                        self.scannedImages.removeAll()
+                        self.stopSession()
+                        self.dismiss?()
+                    }
+                    
                     return
                 }
 
@@ -186,6 +207,14 @@ import UIKit
 
         let croppedImage = photo.crop(toPreviewLayer: camera.cameraLayer, withRect: regionRect)
         scannedImages.append(croppedImage.noiseReducted.rotated)
+        
+        if self.maximumScans != -1
+            && self.scannedImages.count >= self.maximumScans  {
+            self.exportMultiple ? self.exportImages?(self.scannedImages) : self.exportImage?(self.scannedImages[0])
+            self.scannedImages.removeAll()
+            self.stopSession()
+            self.dismiss?()
+        }
     }
 
     private func toggleIdle(disabled: Bool) {

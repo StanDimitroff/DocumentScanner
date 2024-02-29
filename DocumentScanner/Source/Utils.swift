@@ -107,12 +107,4 @@ class Utils {
             return .scaleAspectFit
         }
     }
-
-    static var isIPhoneX: Bool {
-      if UIDevice.current.userInterfaceIdiom == .phone {
-        return UIScreen.main.nativeBounds.height >= 1792 // iPhone XR
-      }
-
-      return false
-    }
 }
